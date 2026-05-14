@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DaktarSab — Admin Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0D1117;--surface:#161B22;--surface2:#1C2128;--surface3:#21262D;
+  --border:#30363D;--border2:#444C56;
+  --text:#E6EDF3;--text2:#8B949E;--text3:#6E7681;
+  --green:#3FB950;--green-dim:#1A3B1F;--green-bright:#56D364;
+  --blue:#58A6FF;--blue-dim:#0D2137;
+  --amber:#D29922;--amber-dim:#2D2107;
+  --red:#F85149;--red-dim:#3B1117;
+  --purple:#BC8CFF;--purple-dim:#1E1433;
+  --teal:#39D4C5;--teal-dim:#0D2B28;
+  --g5:#0F6E56;--g4:#1D9E75;--g3:#5DCAA5;--g2:#9FE1CB;--g1:#D1F5EA;
+  --ff:'DM Sans',sans-serif;--fm:'DM Mono',monospace;--fh:'Syne',sans-serif;
+  --r:8px;--r-lg:12px;
+}
+body{font-family:var(--ff);background:var(--bg);color:var(--text);display:flex;min-height:100vh;font-size:14px}
+
+/* SIDEBAR */
+.sidebar{width:220px;background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;position:fixed;height:100vh;z-index:50}
+.sb-logo{padding:20px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)}
+.sb-logo-mark{width:32px;height:32px;background:var(--g5);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px}
+.sb-logo-text{font-family:var(--fh);font-size:16px;font-weight:700;color:var(--text)}
+.sb-logo-text span{color:var(--g3)}
+.sb-nav{flex:1;padding:12px 8px;overflow-y:auto}
+.sb-section{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.8px;text-transform:uppercase;padding:12px 10px 6px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:8px 10px;border-radius:var(--r);cursor:pointer;color:var(--text2);font-size:13px;font-weight:500;transition:all .15s;margin-bottom:1px}
+.sb-item:hover{background:var(--surface2);color:var(--text)}
+.sb-item.active{background:var(--green-dim);color:var(--green)}
+.sb-icon{font-size:16px;width:20px;text-align:center}
+.sb-badge{margin-left:auto;background:var(--red);color:#fff;font-size:10px;font-weight:700;padding:1px 6px;border-radius:10px}
+.sb-badge.green{background:var(--green-dim);color:var(--green)}
+.sb-footer{padding:12px;border-top:1px solid var(--border)}
+.sb-user{display:flex;align-items:center;gap:8px;padding:8px;border-radius:var(--r);background:var(--surface2)}
+.sb-user-av{width:30px;height:30px;border-radius:8px;background:var(--g5);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;flex-shrink:0}
+.sb-user-name{font-size:12px;font-weight:600}
+.sb-user-role{font-size:10px;color:var(--text3)}
+
+/* MAIN */
+.main{margin-left:220px;flex:1;display:flex;flex-direction:column;min-height:100vh}
+.topbar{height:56px;background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:16px;position:sticky;top:0;z-index:40}
+.topbar-title{font-family:var(--fh);font-size:16px;font-weight:700;flex:1}
+.topbar-search{background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);padding:7px 12px;font-size:13px;font-family:var(--ff);color:var(--text);outline:none;width:240px;transition:border-color .15s}
+.topbar-search:focus{border-color:var(--border2)}
+.topbar-search::placeholder{color:var(--text3)}
+.topbar-actions{display:flex;gap:8px;align-items:center}
+.icon-btn{width:34px;height:34px;border-radius:var(--r);background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;transition:all .15s;position:relative}
+.icon-btn:hover{border-color:var(--border2)}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;background:var(--red);border-radius:50%;border:2px solid var(--surface)}
+.body{padding:24px;flex:1;overflow-y:auto}
+
+/* METRIC CARDS */
+.metrics-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.metric-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:18px 20px;transition:border-color .15s;cursor:default}
+.metric-card:hover{border-color:var(--border2)}
+.metric-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.metric-label{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.5px}
+.metric-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px}
+.mi-green{background:var(--green-dim)}
+.mi-blue{background:var(--blue-dim)}
+.mi-amber{background:var(--amber-dim)}
+.mi-red{background:var(--red-dim)}
+.mi-purple{background:var(--purple-dim)}
+.mi-teal{background:var(--teal-dim)}
+.metric-val{font-family:var(--fh);font-size:28px;font-weight:800;color:var(--text);margin-bottom:4px}
+.metric-change{font-size:11px;display:flex;align-items:center;gap:4px}
+.metric-change.up{color:var(--green)}
+.metric-change.down{color:var(--red)}
+.metric-change.neutral{color:var(--text3)}
+
+/* GRID LAYOUT */
+.content-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.content-grid.three{grid-template-columns:2fr 1fr}
+
+/* CARDS */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.card-header{padding:16px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-family:var(--fh);font-size:14px;font-weight:700}
+.card-action{font-size:12px;color:var(--blue);cursor:pointer}
+.card-body{padding:20px}
+
+/* TABLE */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{font-size:11px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.5px;padding:8px 12px;text-align:left;border-bottom:1px solid var(--border)}
+.data-table td{padding:12px 12px;border-bottom:1px solid var(--border);font-size:13px}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--surface2)}
+.avatar{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+.td-user{display:flex;align-items:center;gap:8px}
+.td-name{font-weight:600;font-size:13px}
+.td-sub{font-size:11px;color:var(--text3)}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:600}
+.badge.green{background:var(--green-dim);color:var(--green)}
+.badge.amber{background:var(--amber-dim);color:var(--amber)}
+.badge.red{background:var(--red-dim);color:var(--red)}
+.badge.blue{background:var(--blue-dim);color:var(--blue)}
+.badge.purple{background:var(--purple-dim);color:var(--purple)}
+.badge.gray{background:var(--surface3);color:var(--text2)}
+.badge::before{content:'';width:5px;height:5px;border-radius:50%;background:currentColor}
+
+/* CHART BARS */
+.chart-bars{display:flex;align-items:flex-end;gap:8px;height:120px;padding:0 4px}
+.bar-wrap{flex:1;display:flex;flex-direction:column;align-items:center;gap:4px}
+.bar{width:100%;border-radius:4px 4px 0 0;transition:opacity .15s;cursor:pointer}
+.bar:hover{opacity:.8}
+.bar-lbl{font-size:10px;color:var(--text3)}
+.bar-val{font-size:10px;font-weight:600;color:var(--text2)}
+.chart-legend{display:flex;gap:16px;margin-top:12px;padding-top:12px;border-top:1px solid var(--border)}
+.legend-item{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
+.legend-dot{width:8px;height:8px;border-radius:2px}
+
+/* ACTIVITY FEED */
+.activity-list{display:flex;flex-direction:column;gap:0}
+.activity-item{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border)}
+.activity-item:last-child{border-bottom:none}
+.activity-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+.activity-body{flex:1}
+.activity-title{font-size:13px;font-weight:500;color:var(--text)}
+.activity-title strong{color:var(--blue)}
+.activity-time{font-size:11px;color:var(--text3);margin-top:2px}
+
+/* MINI STATS */
+.mini-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.mini-stat{background:var(--surface2);border-radius:var(--r);padding:14px;border:1px solid var(--border)}
+.mini-stat-val{font-family:var(--fh);font-size:22px;font-weight:800;margin-bottom:2px}
+.mini-stat-lbl{font-size:11px;color:var(--text3)}
+
+/* SCROLLBAR */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+
+/* BTN */
+.btn{padding:7px 14px;border-radius:var(--r);font-size:12px;font-weight:600;font-family:var(--ff);cursor:pointer;border:none;transition:all .15s}
+.btn-green{background:var(--green-dim);color:var(--green)}
+.btn-green:hover{background:#22543d;color:var(--green-bright)}
+.btn-danger{background:var(--red-dim);color:var(--red)}
+.btn-ghost-sm{background:transparent;color:var(--text3);border:1px solid var(--border)}
+.btn-ghost-sm:hover{border-color:var(--border2);color:var(--text)}
+
+/* PROGRESS */
+.progress-bar{height:6px;background:var(--surface3);border-radius:3px;overflow:hidden;margin-top:6px}
+.progress-fill{height:100%;border-radius:3px}
+
+/* MAP PLACEHOLDER */
+.map-ph{background:var(--surface2);border-radius:var(--r);height:180px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:8px;color:var(--text3);border:1px solid var(--border);position:relative;overflow:hidden}
+.map-dots{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap;padding:20px;opacity:.3}
+.map-dot{width:8px;height:8px;border-radius:50%;background:var(--green)}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-mark">✚</div>
+    <div class="sb-logo-text">Daktar<span>Sab</span></div>
+  </div>
+  <nav class="sb-nav">
+    <div class="sb-section">Overview</div>
+    <div class="sb-item active"><span class="sb-icon">📊</span>Dashboard</div>
+    <div class="sb-item"><span class="sb-icon">📋</span>Bookings <span class="sb-badge">14</span></div>
+    <div class="sb-item"><span class="sb-icon">🔔</span>Alerts <span class="sb-badge">3</span></div>
+
+    <div class="sb-section">Management</div>
+    <div class="sb-item"><span class="sb-icon">🩺</span>Doctors</div>
+    <div class="sb-item"><span class="sb-icon">🏥</span>Hospitals</div>
+    <div class="sb-item"><span class="sb-icon">🤝</span>Partners</div>
+    <div class="sb-item"><span class="sb-icon">👥</span>Patients</div>
+    <div class="sb-item"><span class="sb-icon">🚑</span>Ambulance</div>
+
+    <div class="sb-section">Analytics</div>
+    <div class="sb-item"><span class="sb-icon">📈</span>Analytics</div>
+    <div class="sb-item"><span class="sb-icon">🗺️</span>Coverage Map</div>
+    <div class="sb-item"><span class="sb-icon">🤖</span>AI Reports</div>
+
+    <div class="sb-section">System</div>
+    <div class="sb-item"><span class="sb-icon">⚙️</span>Settings</div>
+    <div class="sb-item"><span class="sb-icon">🔐</span>Admin Users</div>
+  </nav>
+  <div class="sb-footer">
+    <div class="sb-user">
+      <div class="sb-user-av">A</div>
+      <div><div class="sb-user-name">Admin Panel</div><div class="sb-user-role">Super Admin</div></div>
+    </div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-title">Admin Dashboard</div>
+    <input class="topbar-search" placeholder="🔍  Search doctors, hospitals, patients..."/>
+    <div class="topbar-actions">
+      <div class="icon-btn">📥</div>
+      <div class="icon-btn">🔔<span class="notif-dot"></span></div>
+      <div class="icon-btn">⚙️</div>
+    </div>
+    <div style="font-size:11px;color:var(--text3)">Last updated: 2 min ago</div>
+  </div>
+
+  <div class="body">
+
+    <!-- METRICS -->
+    <div class="metrics-grid">
+      <div class="metric-card">
+        <div class="metric-header"><span class="metric-label">Total Consultations</span><div class="metric-icon mi-green">🤖</div></div>
+        <div class="metric-val">12,750</div>
+        <div class="metric-change up">↑ 18.4% this month</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-header"><span class="metric-label">Active Bookings</span><div class="metric-icon mi-blue">📅</div></div>
+        <div class="metric-val">342</div>
+        <div class="metric-change up">↑ 24 new today</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-header"><span class="metric-label">Verified Doctors</span><div class="metric-icon mi-teal">🩺</div></div>
+        <div class="metric-val">2,232</div>
+        <div class="metric-change up">↑ 47 added this week</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-header"><span class="metric-label">Emergency Alerts</span><div class="metric-icon mi-red">🚨</div></div>
+        <div class="metric-val">18</div>
+        <div class="metric-change neutral">● 3 active right now</div>
+      </div>
+    </div>
+
+    <!-- CHARTS + ACTIVITY -->
+    <div class="content-grid three" style="margin-bottom:20px">
+      <div class="card">
+        <div class="card-header">
+          <span class="card-title">Weekly Consultations</span>
+          <span class="card-action">View Full Report →</span>
+        </div>
+        <div class="card-body">
+          <div class="chart-bars">
+            <div class="bar-wrap"><div class="bar-val">420</div><div class="bar" style="height:60%;background:var(--g5)"></div><div class="bar-lbl">Mon</div></div>
+            <div class="bar-wrap"><div class="bar-val">380</div><div class="bar" style="height:55%;background:var(--g5)"></div><div class="bar-lbl">Tue</div></div>
+            <div class="bar-wrap"><div class="bar-val">510</div><div class="bar" style="height:74%;background:var(--g5)"></div><div class="bar-lbl">Wed</div></div>
+            <div class="bar-wrap"><div class="bar-val">470</div><div class="bar" style="height:68%;background:var(--g5)"></div><div class="bar-lbl">Thu</div></div>
+            <div class="bar-wrap"><div class="bar-val">690</div><div class="bar" style="height:100%;background:var(--green-bright)"></div><div class="bar-lbl">Fri</div></div>
+            <div class="bar-wrap"><div class="bar-val">580</div><div class="bar" style="height:84%;background:var(--g5)"></div><div class="bar-lbl">Sat</div></div>
+            <div class="bar-wrap"><div class="bar-val">320</div><div class="bar" style="height:46%;background:var(--g5)"></div><div class="bar-lbl">Sun</div></div>
+          </div>
+          <div class="chart-legend">
+            <div class="legend-item"><div class="legend-dot" style="background:var(--g5)"></div>AI Consultations</div>
+            <div class="legend-item"><div class="legend-dot" style="background:var(--blue)"></div>Bookings</div>
+          </div>
+          <!-- SPECIALTY BREAKDOWN -->
+          <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Top Specialties Today</div>
+            <div style="display:flex;flex-direction:column;gap:9px">
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>General Medicine</span><span style="color:var(--green)">34%</span></div><div class="progress-bar"><div class="progress-fill" style="width:34%;background:var(--green)"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Cardiology</span><span style="color:var(--blue)">21%</span></div><div class="progress-bar"><div class="progress-fill" style="width:21%;background:var(--blue)"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Gastroenterology</span><span style="color:var(--amber)">15%</span></div><div class="progress-bar"><div class="progress-fill" style="width:15%;background:var(--amber)"></div></div></div>
+              <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px"><span>Pediatrics</span><span style="color:var(--purple)">12%</span></div><div class="progress-bar"><div class="progress-fill" style="width:12%;background:var(--purple)"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:20px">
+        <!-- LIVE ACTIVITY -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">Live Activity</span><span class="badge green">● Live</span></div>
+          <div class="card-body" style="padding:8px 16px">
+            <div class="activity-list">
+              <div class="activity-item"><div class="activity-icon mi-red">🚨</div><div class="activity-body"><div class="activity-title"><strong>Emergency</strong> — Chest pain alert, Dhaka</div><div class="activity-time">2 min ago · Routing to nearest cardiology</div></div></div>
+              <div class="activity-item"><div class="activity-icon mi-green">📅</div><div class="activity-body"><div class="activity-title">New booking — <strong>Square Hospital</strong></div><div class="activity-time">5 min ago · Gastroenterology</div></div></div>
+              <div class="activity-item"><div class="activity-icon mi-blue">🩺</div><div class="activity-body"><div class="activity-title">Doctor verified — <strong>Dr. Sarah Begum</strong></div><div class="activity-time">12 min ago · Neurology</div></div></div>
+              <div class="activity-item"><div class="activity-icon mi-amber">🤝</div><div class="activity-body"><div class="activity-title">Partner joined — <strong>Anwer Khan Modern</strong></div><div class="activity-time">28 min ago · Chittagong</div></div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MINI STATS -->
+        <div class="card">
+          <div class="card-header"><span class="card-title">Platform Health</span></div>
+          <div class="card-body">
+            <div class="mini-stats">
+              <div class="mini-stat"><div class="mini-stat-val" style="color:var(--green)">98.7%</div><div class="mini-stat-lbl">Uptime</div></div>
+              <div class="mini-stat"><div class="mini-stat-val" style="color:var(--blue)">1.2s</div><div class="mini-stat-lbl">Avg Response</div></div>
+              <div class="mini-stat"><div class="mini-stat-val" style="color:var(--amber)">47</div><div class="mini-stat-lbl">Pending Approvals</div></div>
+              <div class="mini-stat"><div class="mini-stat-val" style="color:var(--purple)">8</div><div class="mini-stat-lbl">Divisions Live</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BOOKINGS TABLE -->
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-header">
+        <span class="card-title">Recent Booking Requests</span>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-green">Export CSV</button>
+          <span class="card-action">View All →</span>
+        </div>
+      </div>
+      <div style="overflow-x:auto">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Patient</th>
+              <th>Service</th>
+              <th>Provider</th>
+              <th>District</th>
+              <th>Status</th>
+              <th>Urgency</th>
+              <th>Time</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><div class="td-user"><div class="avatar" style="background:#1A3B1F;color:var(--green)">M</div><div><div class="td-name">Mohammad Ali</div><div class="td-sub">+880 1711 000001</div></div></div></td>
+              <td>Cardiology Consult</td>
+              <td>Dhaka Medical</td>
+              <td>Dhaka</td>
+              <td><span class="badge amber">Pending</span></td>
+              <td><span class="badge red">Emergency</span></td>
+              <td style="color:var(--text3);font-size:12px">2 min ago</td>
+              <td><div style="display:flex;gap:6px"><button class="btn btn-green">Accept</button><button class="btn btn-danger">Reject</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="td-user"><div class="avatar" style="background:#0D2137;color:var(--blue)">F</div><div><div class="td-name">Fatema Khanam</div><div class="td-sub">+880 1822 000002</div></div></div></td>
+              <td>Ambulance Service</td>
+              <td>National Ambulance</td>
+              <td>Chittagong</td>
+              <td><span class="badge green">Confirmed</span></td>
+              <td><span class="badge red">Urgent</span></td>
+              <td style="color:var(--text3);font-size:12px">15 min ago</td>
+              <td><div style="display:flex;gap:6px"><button class="btn btn-ghost-sm">Details</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="td-user"><div class="avatar" style="background:#2D2107;color:var(--amber)">R</div><div><div class="td-name">Rahim Uddin</div><div class="td-sub">+880 1933 000003</div></div></div></td>
+              <td>Diagnostic — CBC</td>
+              <td>Labaid Diagnostics</td>
+              <td>Rajshahi</td>
+              <td><span class="badge green">Confirmed</span></td>
+              <td><span class="badge blue">Mild</span></td>
+              <td style="color:var(--text3);font-size:12px">1 hr ago</td>
+              <td><div style="display:flex;gap:6px"><button class="btn btn-ghost-sm">Details</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="td-user"><div class="avatar" style="background:#1E1433;color:var(--purple)">N</div><div><div class="td-name">Nilufa Rashid</div><div class="td-sub">+880 1644 000004</div></div></div></td>
+              <td>Gynecology Consult</td>
+              <td>Square Hospital</td>
+              <td>Dhaka</td>
+              <td><span class="badge amber">Pending</span></td>
+              <td><span class="badge blue">Mild</span></td>
+              <td style="color:var(--text3);font-size:12px">2 hr ago</td>
+              <td><div style="display:flex;gap:6px"><button class="btn btn-green">Accept</button><button class="btn btn-danger">Reject</button></div></td>
+            </tr>
+            <tr>
+              <td><div class="td-user"><div class="avatar" style="background:#0D2B28;color:var(--teal)">K</div><div><div class="td-name">Karim Hossain</div><div class="td-sub">+880 1555 000005</div></div></div></td>
+              <td>Pediatrics Consult</td>
+              <td>Anwer Khan Modern</td>
+              <td>Sylhet</td>
+              <td><span class="badge gray">Completed</span></td>
+              <td><span class="badge blue">Mild</span></td>
+              <td style="color:var(--text3);font-size:12px">Yesterday</td>
+              <td><div style="display:flex;gap:6px"><button class="btn btn-ghost-sm">View</button></div></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- DOCTORS + PARTNERS -->
+    <div class="content-grid" style="margin-bottom:20px">
+      <div class="card">
+        <div class="card-header"><span class="card-title">Pending Doctor Approvals</span><span class="badge amber">47 waiting</span></div>
+        <div style="overflow:auto">
+          <table class="data-table">
+            <thead><tr><th>Doctor</th><th>Specialty</th><th>District</th><th>Status</th><th></th></tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="td-user"><div class="avatar" style="background:var(--green-dim);color:var(--green)">S</div><div><div class="td-name">Dr. Sara Khatun</div><div class="td-sub">MBBS, MD</div></div></div></td>
+                <td style="font-size:12px">Neurology</td><td style="font-size:12px">Dhaka</td>
+                <td><span class="badge amber">Pending</span></td>
+                <td><button class="btn btn-green" style="font-size:11px">Verify</button></td>
+              </tr>
+              <tr>
+                <td><div class="td-user"><div class="avatar" style="background:var(--blue-dim);color:var(--blue)">A</div><div><div class="td-name">Dr. Arif Hasan</div><div class="td-sub">MBBS, DCH</div></div></div></td>
+                <td style="font-size:12px">Pediatrics</td><td style="font-size:12px">Khulna</td>
+                <td><span class="badge amber">Pending</span></td>
+                <td><button class="btn btn-green" style="font-size:11px">Verify</button></td>
+              </tr>
+              <tr>
+                <td><div class="td-user"><div class="avatar" style="background:var(--purple-dim);color:var(--purple)">T</div><div><div class="td-name">Dr. Tahmina Islam</div><div class="td-sub">MBBS, FCPS</div></div></div></td>
+                <td style="font-size:12px">Gynecology</td><td style="font-size:12px">Sylhet</td>
+                <td><span class="badge amber">Pending</span></td>
+                <td><button class="btn btn-green" style="font-size:11px">Verify</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><span class="card-title">Partner Network</span><span class="card-action">Add Partner →</span></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border-radius:var(--r);border:1px solid var(--border)">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:18px">🏥</span><div><div style="font-size:13px;font-weight:600">Hospitals</div><div style="font-size:11px;color:var(--text3)">12,000+ partners</div></div></div>
+              <span class="badge green">Active</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border-radius:var(--r);border:1px solid var(--border)">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:18px">🚑</span><div><div style="font-size:13px;font-weight:600">Ambulance Services</div><div style="font-size:11px;color:var(--text3)">480 providers</div></div></div>
+              <span class="badge green">Active</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border-radius:var(--r);border:1px solid var(--border)">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:18px">🧪</span><div><div style="font-size:13px;font-weight:600">Diagnostics</div><div style="font-size:11px;color:var(--text3)">890 centers</div></div></div>
+              <span class="badge amber">Expanding</span>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:10px 12px;background:var(--surface2);border-radius:var(--r);border:1px solid var(--border)">
+              <div style="display:flex;align-items:center;gap:10px"><span style="font-size:18px">🩸</span><div><div style="font-size:13px;font-weight:600">Blood Banks</div><div style="font-size:11px;color:var(--text3)">Coming soon</div></div></div>
+              <span class="badge gray">Soon</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+</body>
+</html>

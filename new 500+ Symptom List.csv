@@ -1,0 +1,538 @@
+﻿symptom_bn,symptom_en,specialty,urgency
+বুক ব্যথা,Chest Pain,Cardiology,emergency
+বুক চাপ অনুভব,Chest Tightness,Cardiology,emergency
+হৃদস্পন্দন বেড়ে যাওয়া,Heart Palpitations,Cardiology,urgent
+অনিয়মিত হার্টবিট,Irregular Heartbeat,Cardiology,urgent
+শ্বাস নিতে কষ্ট,Shortness of Breath,Pulmonology,emergency
+হাত অবশ হয়ে যাওয়া,Arm Numbness,Neurology,urgent
+হঠাৎ অজ্ঞান হয়ে যাওয়া,Fainting,Cardiology,emergency
+ঠান্ডা ঘাম হওয়া,Cold Sweating,Cardiology,emergency
+মাথা ঘোরা,Dizziness,Neurology,urgent
+ভারসাম্য হারানো,Loss of Balance,Neurology,urgent
+তীব্র মাথা ব্যথা,Severe Headache,Neurology,urgent
+মাইগ্রেন,Migraine,Neurology,mild
+খিঁচুনি,Seizures,Neurology,emergency
+স্মৃতিভ্রংশ,Memory Loss,Neurology,urgent
+কথা বলতে সমস্যা,Difficulty Speaking,Neurology,emergency
+চোখে ঝাপসা দেখা,Blurred Vision,Ophthalmology,urgent
+চোখ লাল হওয়া,Red Eyes,Ophthalmology,mild
+চোখ ব্যথা,Eye Pain,Ophthalmology,urgent
+চোখে পানি পড়া,Watery Eyes,Ophthalmology,mild
+চোখে চুলকানি,Eye Itching,Ophthalmology,mild
+কাশি,Cough,Pulmonology,mild
+দীর্ঘদিন কাশি,Chronic Cough,Pulmonology,urgent
+শুকনা কাশি,Dry Cough,Pulmonology,mild
+কফ সহ কাশি,Wet Cough,Pulmonology,mild
+রক্ত সহ কাশি,Coughing Blood,Pulmonology,emergency
+নাক দিয়ে পানি পড়া,Runny Nose,ENT,mild
+নাক বন্ধ,Nasal Congestion,ENT,mild
+গলা ব্যথা,Sore Throat,ENT,mild
+গলা বসে যাওয়া,Hoarse Voice,ENT,mild
+ঘন ঘন হাঁচি,Frequent Sneezing,ENT,mild
+পেটে ব্যথা,Abdominal Pain,Gastroenterology,urgent
+উপরের পেটে ব্যথা,Upper Abdominal Pain,Gastroenterology,urgent
+নিচের পেটে ব্যথা,Lower Abdominal Pain,Gastroenterology,urgent
+বমি ভাব,Nausea,Gastroenterology,mild
+বমি,Vomiting,Gastroenterology,urgent
+অ্যাসিডিটি,Acid Reflux,Gastroenterology,mild
+বুক জ্বালা,Heartburn,Gastroenterology,mild
+গ্যাস সমস্যা,Gas,Gastroenterology,mild
+পেট ফাঁপা,Bloating,Gastroenterology,mild
+কোষ্ঠকাঠিন্য,Constipation,Gastroenterology,mild
+ডায়রিয়া,Diarrhea,Gastroenterology,urgent
+মলে রক্ত,Blood in Stool,Gastroenterology,emergency
+ক্ষুধামন্দা,Loss of Appetite,Gastroenterology,mild
+ওজন কমে যাওয়া,Weight Loss,Gastroenterology,urgent
+জন্ডিস,Yellowing Skin,Gastroenterology,urgent
+হাঁটু ব্যথা,Knee Pain,Orthopedics,mild
+পিঠে ব্যথা,Back Pain,Orthopedics,mild
+ঘাড় ব্যথা,Neck Pain,Orthopedics,mild
+জয়েন্ট ফুলে যাওয়া,Joint Swelling,Orthopedics,urgent
+হাড়ে ব্যথা,Bone Pain,Orthopedics,mild
+হাঁটতে কষ্ট,Difficulty Walking,Orthopedics,urgent
+মাংসপেশি ব্যথা,Muscle Pain,Orthopedics,mild
+মাংসপেশি শক্ত হয়ে যাওয়া,Muscle Stiffness,Orthopedics,mild
+ত্বকে ফুসকুড়ি,Skin Rash,Dermatology,mild
+চুলকানি,Itching,Dermatology,mild
+ব্রণ,Acne,Dermatology,mild
+চুল পড়া,Hair Loss,Dermatology,mild
+ত্বক লাল হওয়া,Skin Redness,Dermatology,mild
+ত্বক জ্বালা,Skin Burning,Dermatology,urgent
+সাদা দাগ,White Patches,Dermatology,urgent
+শিশুর জ্বর,Child Fever,Pediatrics,urgent
+শিশুর কাশি,Child Cough,Pediatrics,mild
+শিশুর ডায়রিয়া,Child Diarrhea,Pediatrics,urgent
+শিশুর খিঁচুনি,Child Seizure,Pediatrics,emergency
+শিশুর শ্বাসকষ্ট,Child Breathing Difficulty,Pediatrics,emergency
+মাসিক অনিয়মিত,Irregular Periods,Gynecology,urgent
+অতিরিক্ত রক্তপাত,Heavy Bleeding,Gynecology,urgent
+তলপেটে ব্যথা,Pelvic Pain,Gynecology,urgent
+যোনি চুলকানি,Vaginal Itching,Gynecology,mild
+গর্ভাবস্থায় বমি,Pregnancy Nausea,Gynecology,mild
+দাঁত ব্যথা,Tooth Pain,Dentistry,urgent
+দাঁতের সংবেদনশীলতা,Tooth Sensitivity,Dentistry,mild
+মাড়ি থেকে রক্ত,Bleeding Gums,Dentistry,urgent
+মুখে ঘা,Mouth Ulcer,Dentistry,mild
+মুখে দুর্গন্ধ,Bad Breath,Dentistry,mild
+বুক ব্যথা,Chest Pain,Cardiology,emergency
+বুক চাপ অনুভব,Chest Tightness,Cardiology,emergency
+হৃদস্পন্দন বেড়ে যাওয়া,Heart Palpitations,Cardiology,urgent
+অনিয়মিত হার্টবিট,Irregular Heartbeat,Cardiology,urgent
+শ্বাস নিতে কষ্ট,Shortness of Breath,Pulmonology,emergency
+হঠাৎ অজ্ঞান হয়ে যাওয়া,Fainting,Cardiology,emergency
+ঠান্ডা ঘাম হওয়া,Cold Sweating,Cardiology,emergency
+মাথা ঘোরা,Dizziness,Neurology,urgent
+ভারসাম্য হারানো,Loss of Balance,Neurology,urgent
+তীব্র মাথা ব্যথা,Severe Headache,Neurology,urgent
+মাইগ্রেন,Migraine,Neurology,mild
+খিঁচুনি,Seizures,Neurology,emergency
+স্মৃতিভ্রংশ,Memory Loss,Neurology,urgent
+কথা বলতে সমস্যা,Difficulty Speaking,Neurology,emergency
+চোখে ঝাপসা দেখা,Blurred Vision,Ophthalmology,urgent
+চোখ লাল হওয়া,Red Eyes,Ophthalmology,mild
+চোখ ব্যথা,Eye Pain,Ophthalmology,urgent
+চোখে পানি পড়া,Watery Eyes,Ophthalmology,mild
+চোখে চুলকানি,Eye Itching,Ophthalmology,mild
+কাশি,Cough,Pulmonology,mild
+দীর্ঘদিন কাশি,Chronic Cough,Pulmonology,urgent
+শুকনা কাশি,Dry Cough,Pulmonology,mild
+কফ সহ কাশি,Wet Cough,Pulmonology,mild
+রক্ত সহ কাশি,Coughing Blood,Pulmonology,emergency
+নাক দিয়ে পানি পড়া,Runny Nose,ENT,mild
+নাক বন্ধ,Nasal Congestion,ENT,mild
+গলা ব্যথা,Sore Throat,ENT,mild
+গলা বসে যাওয়া,Hoarse Voice,ENT,mild
+ঘন ঘন হাঁচি,Frequent Sneezing,ENT,mild
+পেটে ব্যথা,Abdominal Pain,Gastroenterology,urgent
+উপরের পেটে ব্যথা,Upper Abdominal Pain,Gastroenterology,urgent
+নিচের পেটে ব্যথা,Lower Abdominal Pain,Gastroenterology,urgent
+বমি ভাব,Nausea,Gastroenterology,mild
+বমি,Vomiting,Gastroenterology,urgent
+অ্যাসিডিটি,Acid Reflux,Gastroenterology,mild
+বুক জ্বালা,Heartburn,Gastroenterology,mild
+গ্যাস সমস্যা,Gas,Gastroenterology,mild
+পেট ফাঁপা,Bloating,Gastroenterology,mild
+কোষ্ঠকাঠিন্য,Constipation,Gastroenterology,mild
+ডায়রিয়া,Diarrhea,Gastroenterology,urgent
+মলে রক্ত,Blood in Stool,Gastroenterology,emergency
+ক্ষুধামন্দা,Loss of Appetite,Gastroenterology,mild
+ওজন কমে যাওয়া,Weight Loss,Gastroenterology,urgent
+জন্ডিস,Yellowing Skin,Gastroenterology,urgent
+হাঁটু ব্যথা,Knee Pain,Orthopedics,mild
+পিঠে ব্যথা,Back Pain,Orthopedics,mild
+ঘাড় ব্যথা,Neck Pain,Orthopedics,mild
+জয়েন্ট ফুলে যাওয়া,Joint Swelling,Orthopedics,urgent
+হাড়ে ব্যথা,Bone Pain,Orthopedics,mild
+হাঁটতে কষ্ট,Difficulty Walking,Orthopedics,urgent
+মাংসপেশি ব্যথা,Muscle Pain,Orthopedics,mild
+মাংসপেশি শক্ত হয়ে যাওয়া,Muscle Stiffness,Orthopedics,mild
+ত্বকে ফুসকুড়ি,Skin Rash,Dermatology,mild
+চুলকানি,Itching,Dermatology,mild
+ব্রণ,Acne,Dermatology,mild
+চুল পড়া,Hair Loss,Dermatology,mild
+ত্বক লাল হওয়া,Skin Redness,Dermatology,mild
+ত্বক জ্বালা,Skin Burning,Dermatology,urgent
+সাদা দাগ,White Patches,Dermatology,urgent
+শিশুর জ্বর,Child Fever,Pediatrics,urgent
+শিশুর কাশি,Child Cough,Pediatrics,mild
+শিশুর ডায়রিয়া,Child Diarrhea,Pediatrics,urgent
+শিশুর খিঁচুনি,Child Seizure,Pediatrics,emergency
+শিশুর শ্বাসকষ্ট,Child Breathing Difficulty,Pediatrics,emergency
+মাসিক অনিয়মিত,Irregular Periods,Gynecology,urgent
+অতিরিক্ত রক্তপাত,Heavy Bleeding,Gynecology,urgent
+তলপেটে ব্যথা,Pelvic Pain,Gynecology,urgent
+যোনি চুলকানি,Vaginal Itching,Gynecology,mild
+গর্ভাবস্থায় বমি,Pregnancy Nausea,Gynecology,mild
+দাঁত ব্যথা,Tooth Pain,Dentistry,urgent
+দাঁতের সংবেদনশীলতা,Tooth Sensitivity,Dentistry,mild
+মাড়ি থেকে রক্ত,Bleeding Gums,Dentistry,urgent
+মুখে ঘা,Mouth Ulcer,Dentistry,mild
+মুখে দুর্গন্ধ,Bad Breath,Dentistry,mild
+জ্বর,Fever,General Medicine,urgent
+উচ্চ জ্বর,High Fever,General Medicine,urgent
+শরীর ব্যথা,Body Ache,General Medicine,mild
+অত্যধিক ক্লান্তি,Fatigue,General Medicine,mild
+ঠান্ডা লাগা,Chills,General Medicine,mild
+ঘাম বেশি হওয়া,Excessive Sweating,General Medicine,mild
+খাবার হজম না হওয়া,Indigestion,Gastroenterology,mild
+ঢেকুর,Burping,Gastroenterology,mild
+গলায় কিছু আটকে থাকা অনুভূতি,Globus Sensation,ENT,mild
+কানে ব্যথা,Ear Pain,ENT,urgent
+কানে শব্দ শোনা,Tinnitus,ENT,mild
+কানে কম শোনা,Hearing Loss,ENT,urgent
+কানে পানি পড়া,Ear Discharge,ENT,urgent
+সাইনাস ব্যথা,Sinus Pain,ENT,mild
+মুখ ফুলে যাওয়া,Facial Swelling,Dermatology,urgent
+ঠোঁট ফুলে যাওয়া,Lip Swelling,Allergy,urgent
+হাত ফুলে যাওয়া,Hand Swelling,General Medicine,urgent
+পা ফুলে যাওয়া,Leg Swelling,Cardiology,urgent
+মাথা ঝিমঝিম করা,Lightheadedness,Neurology,mild
+ঘুম না হওয়া,Insomnia,Neurology,mild
+অতিরিক্ত ঘুম,Sleepiness,Neurology,mild
+স্বপ্ন বেশি দেখা,Vivid Dreams,Neurology,mild
+হাত কাঁপা,Tremor,Neurology,urgent
+পা অবশ,Numb Legs,Neurology,urgent
+হাত অবশ,Numb Arms,Neurology,urgent
+মুখ বেঁকে যাওয়া,Facial Droop,Neurology,emergency
+এক পাশ অবশ হওয়া,One-sided Weakness,Neurology,emergency
+হাঁপানি,Athma Attack,Pulmonology,emergency
+বুকে সাঁই সাঁই শব্দ,Wheezing,Pulmonology,urgent
+শ্বাসে বাঁশির শব্দ,Whistling Breath,Pulmonology,urgent
+শ্বাস নিতে ব্যথা,Painful Breathing,Pulmonology,urgent
+বুকে কফ জমা,Chest Congestion,Pulmonology,mild
+হালকা জ্বর,Low Fever,General Medicine,mild
+ঠান্ডা লেগেছে,Common Cold,General Medicine,mild
+গলা শুকিয়ে যাওয়া,Dry Throat,ENT,mild
+খেতে কষ্ট,Difficulty Swallowing,ENT,urgent
+গলায় ব্যথা,Throat Pain,ENT,mild
+জিহ্বা ব্যথা,Tongue Pain,Dentistry,mild
+জিহ্বা সাদা হওয়া,White Tongue,Dentistry,mild
+মুখ শুকিয়ে যাওয়া,Dry Mouth,Dentistry,mild
+মাড়ি ফুলে যাওয়া,Swollen Gums,Dentistry,urgent
+দাঁত নড়ে যাওয়া,Loose Teeth,Dentistry,urgent
+চোখ ফুলে যাওয়া,Swollen Eyes,Ophthalmology,urgent
+চোখে জ্বালা,Burning Eyes,Ophthalmology,mild
+চোখে আলো সহ্য না হওয়া,Light Sensitivity,Ophthalmology,urgent
+রাতে দেখতে সমস্যা,Night Blindness,Ophthalmology,urgent
+ডাবল দেখা,Double Vision,Ophthalmology,emergency
+চোখের সামনে দাগ দেখা,Floaters,Ophthalmology,mild
+হাত ব্যথা,Arm Pain,Orthopedics,mild
+পা ব্যথা,Leg Pain,Orthopedics,mild
+গোড়ালি ব্যথা,Heel Pain,Orthopedics,mild
+হাত ফুলে যাওয়া,Hand Swelling,Orthopedics,urgent
+হাড় ভেঙে যাওয়া,Bone Fracture,Orthopedics,emergency
+মচকানো,Sprain,Orthopedics,urgent
+পেশী টান,Muscle Strain,Orthopedics,urgent
+আঙুল ফুলে যাওয়া,Swollen Fingers,Orthopedics,mild
+পায়ের আঙুল ব্যথা,Toe Pain,Orthopedics,mild
+ত্বক খোসা ওঠা,Skin Peeling,Dermatology,mild
+ত্বকে ফোস্কা,Blisters,Dermatology,urgent
+ত্বক কালো দাগ,Dark Spots,Dermatology,mild
+ত্বকে ফাটা,Cracked Skin,Dermatology,mild
+নখ ভেঙে যাওয়া,Brittle Nails,Dermatology,mild
+নখ কালো হওয়া,Nail Discoloration,Dermatology,mild
+নখের সংক্রমণ,Nail Infection,Dermatology,urgent
+অ্যালার্জি,Allergy,Allergy,mild
+অ্যালার্জি র‍্যাশ,Allergic Rash,Dermatology,mild
+শ্বাসকষ্ট অ্যালার্জি,Allergic Breathing,Pulmonology,urgent
+চুলকানি অ্যালার্জি,Allergic Itch,Dermatology,mild
+চোখে অ্যালার্জি,Eye Allergy,Ophthalmology,mild
+নাকে অ্যালার্জি,Nasal Allergy,ENT,mild
+হাত পা ঝিনঝিন,Tingling Limbs,Neurology,urgent
+হাত কাঁপা,Trembling Hands,Neurology,urgent
+পা কাঁপা,Trembling Legs,Neurology,urgent
+গর্ভাবস্থায় মাথা ঘোরা,Pregnancy Dizziness,Gynecology,urgent
+গর্ভাবস্থায় রক্তপাত,Pregnancy Bleeding,Gynecology,emergency
+স্তনে ব্যথা,Breast Pain,Gynecology,urgent
+স্তনে গাঁট,Breast Lump,Gynecology,urgent
+মেনোপজ সমস্যা,Menopause Symptoms,Gynecology,mild
+হট ফ্ল্যাশ,Hot Flashes,Gynecology,mild
+প্রসব ব্যথা,Labour Pain,Gynecology,emergency
+প্রসব পর রক্তপাত,Postpartum Bleeding,Gynecology,emergency
+শিশুর খাওয়া কমে যাওয়া,Poor Feeding Child,Pediatrics,urgent
+শিশু কাঁদছে বেশি,Excessive Crying Child,Pediatrics,urgent
+শিশুর জ্বর ৩ দিনের বেশি,Prolonged Child Fever,Pediatrics,urgent
+শিশুর পানিশূন্যতা,Child Dehydration,Pediatrics,urgent
+শিশুর ত্বক র‍্যাশ,Child Skin Rash,Pediatrics,mild
+শিশুর নাক দিয়ে পানি,Child Runny Nose,Pediatrics,mild
+শিশুর কানে ব্যথা,Child Ear Pain,Pediatrics,urgent
+শিশুর পেট ব্যথা,Child Stomach Pain,Pediatrics,urgent
+শিশুর বমি,Child Vomiting,Pediatrics,urgent
+শিশুর শ্বাসকষ্ট,Child Breathing Issue,Pediatrics,emergency
+শিশুর খিঁচুনি,Child Convulsion,Pediatrics,emergency
+হঠাৎ বুক ধড়ফড়, Sudden Heart Racing, Cardiology, urgent
+হৃদপিণ্ডে চাপ, Cardiac Pressure, Cardiology, urgent
+ব্যায়ামে শ্বাসকষ্ট, Breathlessness on Exertion, Cardiology, urgent
+রাতে শ্বাসকষ্ট, Night Breathlessness, Cardiology, urgent
+হৃদকম্পন শোনা যাচ্ছে, Audible Heartbeat, Cardiology, mild
+হৃদস্পন্দন ধীর, Slow Heart Rate, Cardiology, urgent
+হৃদস্পন্দন দ্রুত, Fast Heart Rate, Cardiology, urgent
+বুকে জ্বালা ব্যথা, Burning Chest Pain, Cardiology, urgent
+শুয়ে থাকলে শ্বাসকষ্ট, Orthopnea, Cardiology, urgent
+হঠাৎ দুর্বলতা, Sudden Weakness, Neurology, urgent
+হাতের শক্তি কমে যাওয়া, Arm Weakness, Neurology, urgent
+পায়ের শক্তি কমে যাওয়া, Leg Weakness, Neurology, urgent
+হঠাৎ কথা জড়িয়ে যাওয়া, Slurred Speech, Neurology, emergency
+মাথায় চাপ অনুভব, Head Pressure, Neurology, mild
+হাত পা অবশ হয়ে যাওয়া, Limb Numbness, Neurology, urgent
+পায়ে ঝিনঝিনি, Leg Tingling, Neurology, mild
+হাত ঝিনঝিনি, Hand Tingling, Neurology, mild
+ঘাড় শক্ত হয়ে যাওয়া, Neck Rigidity, Neurology, urgent
+মাথা ভার লাগা, Heavy Head Feeling, Neurology, mild
+হাঁটার সময় টালমাটাল, Unsteady Walking, Neurology, urgent
+নাক দিয়ে রক্ত, Nose Bleed, ENT, urgent
+নাকে জ্বালা, Nasal Burning, ENT, mild
+নাকের ভেতর ব্যথা, Nasal Pain, ENT, mild
+গলায় কফ জমা, Throat Phlegm, ENT, mild
+গলায় জ্বালা, Throat Burning, ENT, mild
+গিলতে গেলে ব্যথা, Painful Swallowing, ENT, urgent
+কানে বাজা, Ear Buzzing, ENT, mild
+কানে চাপ অনুভব, Ear Pressure, ENT, mild
+কানে চুলকানি, Ear Itching, ENT, mild
+কানে ভারী লাগা, Ear Fullness, ENT, mild
+শ্বাসে কষ্টের শব্দ, Labored Breathing, Pulmonology, emergency
+গভীর শ্বাস নিতে কষ্ট, Difficulty Deep Breathing, Pulmonology, urgent
+বুকে টান, Chest Pulling Sensation, Pulmonology, urgent
+শ্বাসের গতি বেড়ে যাওয়া, Rapid Breathing, Pulmonology, urgent
+শ্বাস ছোট হয়ে যাওয়া, Shallow Breathing, Pulmonology, urgent
+শ্বাস আটকে যাওয়া, Breathing Blockage, Pulmonology, emergency
+পেট শক্ত লাগা, Hard Abdomen, Gastroenterology, urgent
+পেট মোচড়ানো, Abdominal Cramping, Gastroenterology, urgent
+পেট গুড়গুড় শব্দ, Stomach Rumbling, Gastroenterology, mild
+অতিরিক্ত ঢেকুর, Excessive Burping, Gastroenterology, mild
+বমির সাথে রক্ত, Vomiting Blood, Gastroenterology, emergency
+মুখে তিক্ত স্বাদ, Bitter Taste Mouth, Gastroenterology, mild
+খাবার গলায় আটকে যাওয়া, Food Stuck Throat, Gastroenterology, urgent
+গলায় জ্বালাপোড়া, Esophageal Burning, Gastroenterology, mild
+পেটের ডান পাশে ব্যথা, Right Abdomen Pain, Gastroenterology, urgent
+পেটের বাম পাশে ব্যথা, Left Abdomen Pain, Gastroenterology, urgent
+হাত শক্ত হয়ে যাওয়া, Arm Stiffness, Orthopedics, mild
+পা শক্ত হয়ে যাওয়া, Leg Stiffness, Orthopedics, mild
+হাঁটু লক হয়ে যাওয়া, Knee Locking, Orthopedics, urgent
+হাত নাড়াতে কষ্ট, Difficulty Moving Arm, Orthopedics, urgent
+পা নাড়াতে কষ্ট, Difficulty Moving Leg, Orthopedics, urgent
+হাড়ে চাপ দিলে ব্যথা, Bone Tenderness, Orthopedics, urgent
+জয়েন্টে গরম লাগা, Warm Joint, Orthopedics, urgent
+কাঁধ নাড়াতে কষ্ট, Shoulder Movement Pain, Orthopedics, urgent
+মেরুদণ্ড ব্যথা, Spine Pain, Orthopedics, urgent
+গোড়ালি ফুলে যাওয়া, Ankle Swelling, Orthopedics, urgent
+ত্বকে লাল ফোলা, Red Skin Swelling, Dermatology, mild
+ত্বকে জ্বালাপোড়া, Skin Irritation, Dermatology, mild
+ত্বকে পানি ভর্তি ফুসকুড়ি, Fluid Blisters, Dermatology, urgent
+ত্বকে শক্ত গাঁট, Skin Nodules, Dermatology, urgent
+ত্বকে খোসা ওঠা চুলকানি, Peeling Itch Skin, Dermatology, mild
+মাথার ত্বকে খুশকি, Scalp Dandruff, Dermatology, mild
+মাথার ত্বক চুলকানি, Scalp Itch, Dermatology, mild
+ত্বক পাতলা হওয়া, Thin Skin, Dermatology, mild
+ত্বকে কালো দাগ ছড়ানো, Spreading Dark Spots, Dermatology, urgent
+ত্বকে জ্বালা সহ লাল দাগ, Burning Red Rash, Dermatology, urgent
+শিশুর পেট ফাঁপা, Child Bloating, Pediatrics, mild
+শিশুর খাওয়ার পর বমি, Child Post Meal Vomit, Pediatrics, urgent
+শিশুর অতিরিক্ত ঘাম, Child Excess Sweat, Pediatrics, mild
+শিশুর ঘুম কম, Child Poor Sleep, Pediatrics, mild
+শিশুর ত্বক শুষ্ক, Child Dry Skin, Pediatrics, mild
+শিশুর কাশি রাতে বাড়ে, Child Night Cough, Pediatrics, urgent
+শিশুর গলায় কফ, Child Throat Phlegm, Pediatrics, mild
+শিশুর শ্বাস দ্রুত, Child Rapid Breathing, Pediatrics, urgent
+শিশুর ঠোঁট নীল, Child Blue Lips, Pediatrics, emergency
+শিশুর চোখ ফুলে যাওয়া, Child Eye Swelling, Pediatrics, urgent
+মাসিকের সময় মাথা ঘোরা, Period Dizziness, Gynecology, mild
+মাসিকের সময় বমি, Period Vomiting, Gynecology, mild
+মাসিক দেরি হওয়া, Delayed Period, Gynecology, mild
+মাসিকের সময় তীব্র ব্যথা, Severe Menstrual Pain, Gynecology, urgent
+যোনিতে জ্বালা, Vaginal Burning, Gynecology, urgent
+যোনিতে দুর্গন্ধ, Vaginal Odor, Gynecology, urgent
+যোনিতে সাদা স্রাব, Vaginal White Discharge, Gynecology, mild
+স্তনে চুলকানি, Breast Itching, Gynecology, mild
+স্তনে ফোলা, Breast Swelling, Gynecology, urgent
+স্তনে লালচে দাগ, Breast Red Patch, Gynecology, urgent
+দাঁতের মাড়ি ফুলে যাওয়া, Gum Swelling, Dentistry, urgent
+দাঁতের ফোঁড়া, Dental Abscess, Dentistry, emergency
+মাড়িতে ব্যথা, Gum Pain, Dentistry, urgent
+চোয়াল শক্ত হয়ে যাওয়া, Jaw Stiffness, Dentistry, urgent
+চোয়াল খুলতে কষ্ট, Difficulty Opening Jaw, Dentistry, urgent
+দাঁতের গর্ত, Tooth Cavity, Dentistry, mild
+মুখে জ্বালা, Mouth Burning, Dentistry, mild
+জিহ্বা ফুলে যাওয়া, Swollen Tongue, Dentistry, urgent
+মুখের কোণে ঘা, Mouth Corner Ulcer, Dentistry, mild
+মুখের ভেতর সাদা দাগ, Oral White Patch, Dentistry, urgent
+হঠাৎ শরীর ঠান্ডা হয়ে যাওয়া,Sudden Body Cold,General Medicine,urgent
+শরীর কাঁপা,Body Shivering,General Medicine,mild
+শরীর গরম লাগা,Body Heat Sensation,General Medicine,mild
+হঠাৎ অতিরিক্ত ঘাম,Sudden Sweating,General Medicine,urgent
+শরীরে দুর্বলতা,Body Weakness,General Medicine,mild
+শরীরে ভার লাগা,Body Heaviness,General Medicine,mild
+শরীরে অস্বস্তি,Body Discomfort,General Medicine,mild
+শরীর অবশ লাগা,Body Numbness,Neurology,urgent
+হঠাৎ ভারসাম্য হারানো,Sudden Balance Loss,Neurology,emergency
+হঠাৎ অন্ধকার দেখা,Sudden Vision Blackout,Neurology,emergency
+চোখে চাপ অনুভব,Eye Pressure,Ophthalmology,urgent
+চোখে কাঁপুনি,Eye Twitching,Ophthalmology,mild
+চোখে ধোঁয়াটে দেখা,Hazy Vision,Ophthalmology,urgent
+চোখের পাতা কাঁপা,Eyelid Twitch,Ophthalmology,mild
+চোখে ব্যথা সহ পানি,Eye Pain With Tears,Ophthalmology,urgent
+চোখে পুঁজ পড়া,Eye Pus,Ophthalmology,urgent
+চোখ শুকিয়ে যাওয়া,Dry Eyes,Ophthalmology,mild
+চোখে চাপ ব্যথা,Eye Pressure Pain,Ophthalmology,urgent
+চোখের চারপাশে ব্যথা,Eye Socket Pain,Ophthalmology,urgent
+চোখের পাতা ফুলে যাওয়া,Eyelid Swelling,Ophthalmology,urgent
+গলায় আটকে যাওয়া অনুভূতি,Choking Sensation,ENT,urgent
+গলায় শুকনো ভাব,Dry Throat Feeling,ENT,mild
+গলায় চুলকানি,Throat Itching,ENT,mild
+গলায় ফোলা,Throat Swelling,ENT,urgent
+কণ্ঠস্বর ভেঙে যাওয়া,Voice Break,ENT,mild
+কথা বলতে কষ্ট,Difficulty Talking,ENT,urgent
+কানে পপ শব্দ,Ear Popping,ENT,mild
+কানে ব্যথা সহ জ্বর,Ear Pain With Fever,ENT,urgent
+কানে পানি জমা,Ear Fluid,ENT,urgent
+কানে ভারী আওয়াজ,Loud Ear Noise,ENT,mild
+শ্বাস নিতে গিয়ে ব্যথা,Painful Inhalation,Pulmonology,urgent
+শ্বাসে গরম অনুভূতি,Hot Breath Feeling,Pulmonology,mild
+দ্রুত শ্বাস,Fast Breathing,Pulmonology,urgent
+গভীর শ্বাস নিতে ব্যথা,Deep Breath Pain,Pulmonology,urgent
+শ্বাস আটকে যাওয়ার অনুভূতি,Breath Block Feeling,Pulmonology,emergency
+বুকে ঠান্ডা অনুভূতি,Cold Chest Feeling,Pulmonology,mild
+বুকে ভারী অনুভূতি,Heavy Chest,Pulmonology,urgent
+বুকে চেপে ধরা ব্যথা,Squeezing Chest Pain,Cardiology,emergency
+হৃদপিণ্ডে ধাক্কা লাগা অনুভূতি,Heart Thump,Cardiology,urgent
+হৃদকম্পন অস্বাভাবিক,Abnormal Heart Beat,Cardiology,urgent
+পেট শক্ত হয়ে যাওয়া,Hard Stomach,Gastroenterology,urgent
+পেটে টান ধরা,Stomach Pulling,Gastroenterology,urgent
+পেট কাঁপা,Stomach Flutter,Gastroenterology,mild
+পেটের ভেতর জ্বালা,Internal Stomach Burning,Gastroenterology,mild
+খাবার খেলেই ব্যথা,Pain After Eating,Gastroenterology,urgent
+খাবার খেলে বমি,Vomit After Food,Gastroenterology,urgent
+অতিরিক্ত ক্ষুধা,Excess Hunger,Gastroenterology,mild
+খাবারে অরুচি,Food Aversion,Gastroenterology,mild
+পেটে চাপ ব্যথা,Pressure Abdomen,Gastroenterology,urgent
+পেট ফুলে শক্ত,Bloated Hard Abdomen,Gastroenterology,urgent
+পিঠের মাঝখানে ব্যথা,Mid Back Pain,Orthopedics,mild
+মেরুদণ্ডে জ্বালা,Spine Burning,Orthopedics,mild
+হাঁটু গরম লাগা,Warm Knee,Orthopedics,urgent
+হাঁটুতে টান,Knee Strain,Orthopedics,urgent
+হাত ঘোরাতে কষ্ট,Arm Rotation Pain,Orthopedics,urgent
+পা ভাঁজ করতে কষ্ট,Leg Bending Pain,Orthopedics,urgent
+গোড়ালিতে চাপ ব্যথা,Heel Pressure Pain,Orthopedics,mild
+পায়ের পাতা জ্বালা,Foot Burning,Orthopedics,mild
+পায়ের পাতা অবশ,Foot Numbness,Neurology,urgent
+পায়ের পাতা ঝিনঝিনি,Foot Tingling,Neurology,mild
+ত্বক টান টান লাগা,Tight Skin,Dermatology,mild
+ত্বকে ফেটে যাওয়া,Cut Skin,Dermatology,mild
+ত্বকে রুক্ষতা,Rough Skin,Dermatology,mild
+ত্বকে দাগ বেড়ে যাওয়া,Increasing Spots,Dermatology,urgent
+ত্বকে গরম ভাব,Warm Skin,Dermatology,mild
+ত্বকে লাল রেখা,Red Skin Lines,Dermatology,urgent
+ত্বকে ফোলা চাকা,Skin Hives,Dermatology,urgent
+ত্বকে ক্ষত,Skin Lesion,Dermatology,urgent
+ত্বকে কালো ফোলা,Dark Skin Lump,Dermatology,urgent
+ত্বকে সংক্রমণ,Skin Infection,Dermatology,urgent
+শিশুর জ্বর রাতে বাড়ে,Child Night Fever,Pediatrics,urgent
+শিশুর কাশি দিনে বাড়ে,Child Day Cough,Pediatrics,mild
+শিশুর ঘুমে কাশি,Child Sleep Cough,Pediatrics,urgent
+শিশুর চোখ লাল,Child Red Eye,Pediatrics,urgent
+শিশুর নাক বন্ধ,Child Nasal Block,Pediatrics,mild
+শিশুর শ্বাস ধীর,Child Slow Breathing,Pediatrics,urgent
+শিশুর পেট শক্ত,Child Hard Abdomen,Pediatrics,urgent
+শিশুর গায়ে দানা,Child Skin Bumps,Pediatrics,mild
+শিশুর গায়ে লাল দাগ,Child Red Spots,Pediatrics,mild
+শিশুর খাওয়া বন্ধ,Child Refusing Food,Pediatrics,urgent
+গর্ভাবস্থায় কোমর ব্যথা,Pregnancy Back Pain,Gynecology,mild
+গর্ভাবস্থায় পা ফুলে যাওয়া,Pregnancy Leg Swelling,Gynecology,urgent
+গর্ভাবস্থায় মাথা ব্যথা,Pregnancy Headache,Gynecology,urgent
+গর্ভাবস্থায় দৃষ্টি ঝাপসা,Pregnancy Blurred Vision,Gynecology,emergency
+গর্ভাবস্থায় পেট ব্যথা,Pregnancy Abdominal Pain,Gynecology,urgent
+গর্ভাবস্থায় শ্বাসকষ্ট,Pregnancy Breathlessness,Gynecology,urgent
+গর্ভাবস্থায় জ্বর,Pregnancy Fever,Gynecology,urgent
+গর্ভাবস্থায় বমি বেশি,Pregnancy Severe Vomiting,Gynecology,urgent
+গর্ভাবস্থায় দুর্বলতা,Pregnancy Weakness,Gynecology,mild
+গর্ভাবস্থায় বুক জ্বালা,Pregnancy Heartburn,Gynecology,mild
+দাঁতে চাপ ব্যথা,Tooth Pressure Pain,Dentistry,urgent
+দাঁতে ঠান্ডা লাগা,Cold Tooth Sensitivity,Dentistry,mild
+দাঁতে গরম লাগা,Hot Tooth Sensitivity,Dentistry,mild
+মাড়িতে পুঁজ,Gum Pus,Dentistry,urgent
+মাড়িতে লাল দাগ,Gum Red Spot,Dentistry,mild
+চোয়ালে টান,Jaw Strain,Dentistry,urgent
+চোয়াল ক্লিক শব্দ,Jaw Clicking,Dentistry,mild
+চোয়ালে ব্যথা খুলতে,Jaw Opening Pain,Dentistry,urgent
+মুখের ভেতর কালো দাগ,Oral Dark Spot,Dentistry,urgent
+মুখের ভেতর লাল দাগ,Oral Red Spot,Dentistry,urgent
+হঠাৎ মাথা ঘুরে পড়ে যাওয়া,Sudden Collapse,Neurology,emergency
+হঠাৎ কথা জড়িয়ে যাওয়া,Slurred Speech,Neurology,emergency
+হঠাৎ শরীরের এক পাশ অবশ,One Side Body Numb,Neurology,emergency
+হঠাৎ স্মৃতি হারানো,Sudden Memory Loss,Neurology,urgent
+ঘন ঘন মাথা ঘোরা,Frequent Dizziness,Neurology,urgent
+হাত কাঁপা,Hand Tremor,Neurology,urgent
+পা কাঁপা,Leg Tremor,Neurology,urgent
+ঘুমের মধ্যে খিঁচুনি,Seizure During Sleep,Neurology,emergency
+হাত অবশ লাগা,Arm Numbness,Neurology,urgent
+পা অবশ লাগা,Leg Numbness,Neurology,urgent
+হঠাৎ চোখে আলো ঝলকানি,Flashing Lights Vision,Ophthalmology,urgent
+চোখে কালো দাগ ভাসা,Floaters,Ophthalmology,mild
+চোখে ডাবল দেখা,Double Vision,Ophthalmology,urgent
+চোখে অন্ধকার নেমে আসা,Vision Loss,Ophthalmology,emergency
+চোখ লাল হয়ে ব্যথা,Red Painful Eye,Ophthalmology,urgent
+চোখ ফুলে যাওয়া,Eye Swelling,Ophthalmology,urgent
+চোখের নিচে কালো দাগ,Dark Circles,Ophthalmology,mild
+চোখের পাতা পড়ে যাওয়া,Droopy Eyelid,Ophthalmology,urgent
+চোখে আলোতে সমস্যা,Light Sensitivity,Ophthalmology,mild
+চোখে জ্বালা ও পানি,Burning Watery Eyes,Ophthalmology,mild
+নাকে ঘন সর্দি,Thick Nasal Discharge,ENT,mild
+নাকে রক্ত পড়া,Nose Bleed,ENT,urgent
+নাকে ব্যথা,Nasal Pain,ENT,mild
+নাক দিয়ে দুর্গন্ধ,Nasal Foul Smell,ENT,urgent
+নাক বন্ধ হয়ে শ্বাসকষ্ট,Nasal Breathing Difficulty,ENT,urgent
+কানে শোনা কমে যাওয়া,Hearing Loss,ENT,urgent
+কানে গুঞ্জন,Tinnitus,ENT,mild
+কানে পুঁজ পড়া,Ear Discharge,ENT,urgent
+কানে চাপ ব্যথা,Ear Pressure Pain,ENT,urgent
+কানে চুলকানি,Ear Itching,ENT,mild
+গলা ফুলে যাওয়া,Swollen Throat,ENT,urgent
+গলায় ব্যথা,Throat Pain,ENT,mild
+গলায় সংক্রমণ,Throat Infection,ENT,urgent
+গলা শুকিয়ে যাওয়া,Dry Throat,ENT,mild
+খাবার গিলতে কষ্ট,Difficulty Swallowing,ENT,urgent
+গলায় কিছু আটকে থাকা অনুভূতি,Foreign Body Sensation,ENT,urgent
+কণ্ঠস্বর বসে যাওয়া,Hoarse Voice,ENT,mild
+গলা লাল হয়ে যাওয়া,Red Throat,ENT,mild
+গলা চুলকানো,Throat Irritation,ENT,mild
+গলা ব্যথা সহ জ্বর,Throat Pain Fever,ENT,urgent
+বুকে জ্বালা,Burning Chest,Gastroenterology,mild
+বুকে চাপ ব্যথা,Chest Pressure Pain,Cardiology,emergency
+বুকে ব্যথা ছড়িয়ে পড়া,Radiating Chest Pain,Cardiology,emergency
+হৃদকম্পন বেড়ে যাওয়া,Fast Heartbeat,Cardiology,urgent
+হৃদকম্পন ধীর হয়ে যাওয়া,Slow Heartbeat,Cardiology,urgent
+শ্বাস নিতে কষ্ট,Breathing Difficulty,Pulmonology,urgent
+হঠাৎ শ্বাস বন্ধ হওয়া,Stopped Breathing,Pulmonology,emergency
+কাশিতে রক্ত,Blood In Cough,Pulmonology,emergency
+দীর্ঘদিন কাশি,Chronic Cough,Pulmonology,urgent
+কাশির সাথে শ্বাসকষ্ট,Cough With Breathlessness,Pulmonology,urgent
+পেটে তীব্র ব্যথা,Severe Abdominal Pain,Gastroenterology,urgent
+পেট ফুলে যাওয়া,Abdominal Bloating,Gastroenterology,mild
+পেটে জ্বালা,Stomach Burning,Gastroenterology,mild
+পেটে গ্যাস,Gas Problem,Gastroenterology,mild
+পেটে মোচড় ব্যথা,Stomach Cramp,Gastroenterology,urgent
+খাবার হজম না হওয়া,Indigestion,Gastroenterology,mild
+বমি হওয়া,Vomiting,Gastroenterology,urgent
+রক্ত বমি,Blood Vomit,Gastroenterology,emergency
+ডায়রিয়া,Diarrhea,Gastroenterology,urgent
+রক্তসহ পায়খানা,Bloody Stool,Gastroenterology,emergency
+পিঠে তীব্র ব্যথা,Severe Back Pain,Orthopedics,urgent
+কোমরে ব্যথা,Lower Back Pain,Orthopedics,mild
+মেরুদণ্ড শক্ত হয়ে যাওয়া,Spine Stiffness,Orthopedics,mild
+হাঁটু ফুলে যাওয়া,Knee Swelling,Orthopedics,urgent
+হাঁটু ব্যথা,Knee Pain,Orthopedics,mild
+পায়ে ব্যথা,Leg Pain,Orthopedics,mild
+গোড়ালিতে ব্যথা,Heel Pain,Orthopedics,mild
+হাতের জয়েন্ট ব্যথা,Hand Joint Pain,Orthopedics,mild
+আঙুল ফুলে যাওয়া,Finger Swelling,Orthopedics,mild
+হাড়ে ব্যথা,Bone Pain,Orthopedics,urgent
+ত্বকে লাল দাগ,Red Skin Rash,Dermatology,mild
+ত্বকে চুলকানি,Skin Itching,Dermatology,mild
+ত্বকে ফুসকুড়ি,Skin Rash,Dermatology,mild
+ত্বকে ফোস্কা,Skin Blister,Dermatology,urgent
+ত্বকে পুঁজ,Skin Pus,Dermatology,urgent
+ত্বকে ফাঙ্গাল সংক্রমণ,Fungal Infection,Dermatology,urgent
+ত্বকে কালো দাগ,Dark Skin Patch,Dermatology,mild
+ত্বকে সাদা দাগ,White Skin Patch,Dermatology,urgent
+ত্বকে ঘা,Skin Ulcer,Dermatology,urgent
+ত্বক ফেটে যাওয়া,Cracked Skin,Dermatology,mild
+শিশুর জ্বর,Child Fever,Pediatrics,urgent
+শিশুর কাশি,Child Cough,Pediatrics,mild
+শিশুর শ্বাসকষ্ট,Child Breathing Difficulty,Pediatrics,urgent
+শিশুর ডায়রিয়া,Child Diarrhea,Pediatrics,urgent
+শিশুর বমি,Child Vomiting,Pediatrics,urgent
+শিশুর খিঁচুনি,Child Seizure,Pediatrics,emergency
+শিশুর গায়ে ফুসকুড়ি,Child Rash,Pediatrics,mild
+শিশুর খাওয়া কমে যাওয়া,Child Poor Feeding,Pediatrics,urgent
+শিশুর ওজন কমে যাওয়া,Child Weight Loss,Pediatrics,urgent
+শিশুর কান ব্যথা,Child Ear Pain,Pediatrics,urgent
+গর্ভাবস্থায় রক্তপাত,Pregnancy Bleeding,Gynecology,emergency
+গর্ভাবস্থায় পেট ব্যথা,Pregnancy Abdominal Pain,Gynecology,urgent
+গর্ভাবস্থায় মাথা ঘোরা,Pregnancy Dizziness,Gynecology,urgent
+গর্ভাবস্থায় ফোলা,Pregnancy Swelling,Gynecology,urgent
+গর্ভাবস্থায় জ্বর,Pregnancy Fever,Gynecology,urgent
+গর্ভাবস্থায় বমি,Pregnancy Vomiting,Gynecology,mild
+গর্ভাবস্থায় শ্বাসকষ্ট,Pregnancy Breathlessness,Gynecology,urgent
+গর্ভাবস্থায় চোখ ঝাপসা,Pregnancy Blurred Vision,Gynecology,emergency
+গর্ভাবস্থায় দুর্বলতা,Pregnancy Weakness,Gynecology,mild
+গর্ভাবস্থায় কোমর ব্যথা,Pregnancy Back Pain,Gynecology,mild
