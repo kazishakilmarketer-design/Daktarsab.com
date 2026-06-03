@@ -121,6 +121,20 @@ export function analyzeSymptom(inputText: string, context: PatientContext): Engi
 
   // Fallback defaults — AI-1 FIX: use canonical specialty
   if (detectedSeverity === "unknown") {
+    if (bestScore === 0) {
+      // Conversational fallback (e.g. "hello", "hi")
+      const result: EngineResult = {
+        isEmergency: false,
+        severity: "unknown",
+        primarySymptom: null,
+        recommendedSpecialty: "", // Empty prevents orchestrator from showing CostCard
+        routingAdvice: "আসসালামু আলাইকুম! আমি ডাক্তার সাব এআই। আপনার কী সমস্যা হচ্ছে, দয়া করে বিস্তারিতভাবে বলুন।",
+        patientSummary: "",
+        bookingTrigger: null
+      };
+      logSymptomTriage(inputText, result, bestScore);
+      return result;
+    }
     detectedSeverity = "mild";
     specialty = CANONICAL_SPECIALTY.general_medicine.bn;
     matchedSymptomBN = "সাধারণ শারীরিক সমস্যা";

@@ -92,10 +92,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
         return prev;
       });
+      setIsCheckingProfile(false); // Fix: also clear profile checking flag
     }, 6000);
+
+    let isMounted = true;
 
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (_event, session) => {
+        if (!isMounted) return;
         setSession(session);
         setUser(session?.user ?? null);
         try {
@@ -107,13 +111,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         } catch (err) {
           console.error("Error in onAuthStateChange profile check:", err);
         } finally {
-          setLoading(false);
-          clearTimeout(safetyTimeout);
+          if (isMounted) {
+            setLoading(false);
+            clearTimeout(safetyTimeout);
+          }
         }
       }
     );
 
     supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!isMounted) return;
       setSession(session);
       setUser(session?.user ?? null);
       try {
@@ -125,16 +132,22 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } catch (err) {
         console.error("Error in getSession profile check:", err);
       } finally {
-        setLoading(false);
-        clearTimeout(safetyTimeout);
+        if (isMounted) {
+          setLoading(false);
+          clearTimeout(safetyTimeout);
+        }
       }
     }).catch(err => {
       console.error("Critical error in getSession:", err);
-      setLoading(false);
-      clearTimeout(safetyTimeout);
+      if (isMounted) {
+        setLoading(false);
+        setIsCheckingProfile(false);
+        clearTimeout(safetyTimeout);
+      }
     });
 
     return () => {
+      isMounted = false;
       subscription.unsubscribe();
       clearTimeout(safetyTimeout);
     };

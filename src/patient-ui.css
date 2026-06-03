@@ -21,10 +21,7 @@
   max-width:430px;
   height:100dvh;
   margin:0 auto;
-  background-image: url('/bg_main.png');
-  background-size: cover;
-  background-position: top center;
-  background-attachment: fixed;
+  background-color: var(--bg);
   display:flex;
   flex-direction:column;
   position:relative;
@@ -318,39 +315,39 @@
 }
 
 @media(min-width:768px){
-  body.patient-desktop {
-    display: block;
-    background: transparent;
-    min-height: 100vh;
-    overflow: auto;
-  }
   .patient-app-shell {
     max-width: 100%;
     border-radius: 0;
     height: 100vh;
     min-height: 100vh;
     box-shadow: none;
-    background-size: cover;
-    background-attachment: fixed;
+    background: transparent;
   }
   .patient-screen {
-    max-width: 800px;
+    max-width: 1440px;
     margin: 0 auto;
-    background: var(--white);
-    box-shadow: var(--shadow-md);
+    background: var(--bg);
+    box-shadow: none;
     min-height: 100vh;
+    border: none;
   }
   .topbar {
-    max-width: 800px;
+    max-width: 1440px;
     margin: 0 auto;
-    border-radius: 0 0 16px 16px;
+    border-radius: 0;
+    border: none;
   }
-  .nav-bar {
-    max-width: 800px;
-    margin: 0 auto;
-    left: 0; right: 0;
-    bottom: 20px;
-    border-radius: 24px;
+  .bottom-nav {
+    display: none;
+  }
+  .quick-grid {
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 16px;
+  }
+  .qa-icon-box {
+    width: 60px;
+    height: 60px;
+    aspect-ratio: auto;
   }
 }
 

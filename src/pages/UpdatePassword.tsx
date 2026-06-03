@@ -52,8 +52,8 @@ export default function UpdatePassword() {
             toast({ title: "✅ পাসওয়ার্ড পরিবর্তন সফল!", description: "এখন লগইন করুন।" });
             await supabase.auth.signOut();
             navigate("/auth");
-        } catch (err: any) {
-            toast({ title: "সমস্যা হয়েছে", description: err?.message, variant: "destructive" });
+        } catch (err: unknown) {
+            toast({ title: "সমস্যা হয়েছে", description: err instanceof Error ? err.message : "Unknown error", variant: "destructive" });
         } finally {
             setLoading(false);
         }

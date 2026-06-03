@@ -118,11 +118,7 @@
     @apply bg-background text-foreground;
     font-family: 'Hind Siliguri', sans-serif;
     font-size: 14px;
-    background-image: url('/bg_main.png');
-    background-size: cover;
-    background-position: center top;
-    background-attachment: fixed;
-    background-repeat: no-repeat;
+    background-color: var(--bg);
   }
 
   @media (min-width: 768px) {

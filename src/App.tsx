@@ -59,39 +59,19 @@ const App = () => {
                 {/* Patient Routes with Global Header/Footer */}
                 <Route element={<PatientLayout />}>
                   <Route path="/about" element={<AboutUs />} />
-                  <Route path="/home" element={
-                    <ProtectedRoute><HomeDashboard /></ProtectedRoute>
-                  } />
-                  <Route path="/reports" element={
-                    <ProtectedRoute><TestReports /></ProtectedRoute>
-                  } />
-                  <Route path="/payment" element={
-                    <ProtectedRoute><PaymentGateway /></ProtectedRoute>
-                  } />
-                  <Route path="/chat" element={
-                    <ProtectedRoute><Index /></ProtectedRoute>
-                  } />
-                  <Route path="/hospital-map" element={
-                    <ProtectedRoute><HospitalMap /></ProtectedRoute>
-                  } />
-                  <Route path="/prescription" element={
-                    <ProtectedRoute><Prescription /></ProtectedRoute>
-                  } />
-                  <Route path="/profile" element={
-                    <ProtectedRoute><PatientProfile /></ProtectedRoute>
-                  } />
-                  <Route path="/health-card" element={
-                    <ProtectedRoute><HealthCard /></ProtectedRoute>
-                  } />
-                  <Route path="/appointments" element={
-                    <ProtectedRoute><Appointments /></ProtectedRoute>
-                  } />
-                  <Route path="/pharmacy" element={
-                    <ProtectedRoute><Pharmacy /></ProtectedRoute>
-                  } />
+                  <Route path="/home" element={<HomeDashboard />} />
+                  <Route path="/reports" element={<ProtectedRoute><TestReports /></ProtectedRoute>} />
+                  <Route path="/payment" element={<ProtectedRoute><PaymentGateway /></ProtectedRoute>} />
+                  <Route path="/chat" element={<Index />} />
+                  <Route path="/hospital-map" element={<HospitalMap />} />
+                  <Route path="/prescription" element={<ProtectedRoute><Prescription /></ProtectedRoute>} />
+                  <Route path="/profile" element={<ProtectedRoute><PatientProfile /></ProtectedRoute>} />
+                  <Route path="/health-card" element={<ProtectedRoute><HealthCard /></ProtectedRoute>} />
+                  <Route path="/appointments" element={<ProtectedRoute><Appointments /></ProtectedRoute>} />
+                  <Route path="/pharmacy" element={<Pharmacy />} />
                   <Route path="/import" element={<ProtectedRoute><ImportHospitals /></ProtectedRoute>} />
                   <Route path="/features" element={<Features />} />
-                  <Route path="/doctors" element={<ProtectedRoute><Doctors /></ProtectedRoute>} />
+                  <Route path="/doctors" element={<Doctors />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>

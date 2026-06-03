@@ -1,9 +1,26 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, Pill, FileText, MapPin, Phone, CheckCircle, Clock, Package, Truck, Search, Plus } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
+
+interface VaultFile {
+  id: string;
+  file_name: string;
+  upload_date: string;
+  file_type: string;
+  file_url?: string;
+}
+
+interface PharmacyOrder {
+  id: string;
+  status: string;
+  delivery_address: string;
+  contact_phone: string;
+  created_at: string;
+  total_amount?: number;
+}
 
 export default function Pharmacy() {
   const navigate = useNavigate();
@@ -14,18 +31,11 @@ export default function Pharmacy() {
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [prescriptionId, setPrescriptionId] = useState<string | null>(null);
-  const [vaultFiles, setVaultFiles] = useState<any[]>([]);
+  const [vaultFiles, setVaultFiles] = useState<VaultFile[]>([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [orders, setOrders] = useState<any[]>([]);
+  const [orders, setOrders] = useState<PharmacyOrder[]>([]);
 
-  useEffect(() => {
-    if (user?.id) {
-      fetchVaultFiles();
-      fetchOrders();
-    }
-  }, [user?.id]);
-
-  const fetchVaultFiles = async () => {
+  const fetchVaultFiles = useCallback(async () => {
     if (!user?.id) return;
     const { data } = await supabase
       .from("health_vault")
@@ -33,9 +43,9 @@ export default function Pharmacy() {
       .eq("user_id", user.id)
       .eq("file_type", "prescription");
     if (data) setVaultFiles(data);
-  };
+  }, [user?.id]);
 
-  const fetchOrders = async () => {
+  const fetchOrders = useCallback(async () => {
     if (!user?.id) return;
     const { data } = await supabase
       .from("pharmacy_orders")
@@ -43,7 +53,14 @@ export default function Pharmacy() {
       .eq("user_id", user.id)
       .order("created_at", { ascending: false });
     if (data) setOrders(data);
-  };
+  }, [user?.id]);
+
+  useEffect(() => {
+    if (user?.id) {
+      fetchVaultFiles();
+      fetchOrders();
+    }
+  }, [user?.id, fetchVaultFiles, fetchOrders]);
 
   const handleOrderSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,8 +86,8 @@ export default function Pharmacy() {
       setPhone("");
       setActiveTab("history");
       fetchOrders();
-    } catch (err: any) {
-      toast({ title: "ত্রুটি", description: err.message, variant: "destructive" });
+    } catch (err: unknown) {
+      toast({ title: "ত্রুটি", description: err instanceof Error ? err.message : "Unknown error", variant: "destructive" });
     } finally {
       setIsSubmitting(false);
     }

@@ -92,7 +92,7 @@ export default function HomeDashboard() {
         const [consultRes, doctorRes, hospitalRes] = await Promise.all([
           (supabase as any).from("medical_records").select("id", { count: "exact", head: true }),
           (supabase as any).from("doctors").select("id", { count: "exact", head: true }),
-          (supabase as any).from("hospitals").select("id", { count: "exact", head: true }),
+          (supabase as any).from("facilities").select("id", { count: "exact", head: true }),
         ]);
 
         setLiveStats([

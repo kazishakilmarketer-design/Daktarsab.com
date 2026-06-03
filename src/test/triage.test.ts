@@ -9,6 +9,9 @@ vi.mock("@/integrations/supabase/client", () => {
   return {
     supabase: {
       from,
+      auth: {
+        getUser: vi.fn().mockResolvedValue({ data: { user: { id: "test-user-id" } }, error: null }),
+      }
     },
   };
 });
@@ -43,7 +46,7 @@ describe("AI Engine symptom triage", () => {
 });
 
 describe("Hospital locator filters by district and upazila", () => {
-  let supabase: any;
+  let supabase: { from: ReturnType<typeof vi.fn>; auth?: { getUser: ReturnType<typeof vi.fn> } };
 
   beforeEach(async () => {
     const supabaseModule = await import("@/integrations/supabase/client");
@@ -66,8 +69,8 @@ describe("Hospital locator filters by district and upazila", () => {
       select: vi.fn().mockReturnThis(),
       limit: vi.fn().mockReturnThis(),
       ilike: vi.fn().mockReturnThis(),
-      then: (onFulfilled: any) => Promise.resolve(response).then(onFulfilled),
-      catch: (onRejected: any) => Promise.resolve(response).catch(onRejected),
+      then: (onFulfilled: (value: unknown) => unknown) => Promise.resolve(response).then(onFulfilled),
+      catch: (onRejected: (reason: unknown) => unknown) => Promise.resolve(response).catch(onRejected),
     };
 
     supabase.from.mockReturnValue(query);
@@ -75,9 +78,9 @@ describe("Hospital locator filters by district and upazila", () => {
     const { findHospitalsByLocation } = await import("@/lib/doctorSaabAgents");
     const hospitals = await findHospitalsByLocation("বগুড়া", "শাজাহানপুর", 2);
 
-    expect(supabase.from).toHaveBeenCalledWith("hospitals");
-    expect(query.ilike).toHaveBeenCalledWith("district", "বগুড়া");
-    expect(query.ilike).toHaveBeenCalledWith("upazila", "শাজাহানপুর");
+    expect(supabase.from).toHaveBeenCalledWith("facilities");
+    expect(query.ilike).toHaveBeenCalledWith("district", "%বগুড়া%");
+    expect(query.ilike).toHaveBeenCalledWith("upazila", "%শাজাহানপুর%");
 
     expect(hospitals).toHaveLength(1);
     expect(hospitals[0].name).toBe(fakeHospital.name);

@@ -17,55 +17,7 @@ interface RawDoctor {
     profileUrl: string;
 }
 
-// Module-level cache so we only fetch once across all hook instances
-let _cache: RawDoctor[] | null = null;
-let _loading = false;
-const _listeners: Array<(docs: RawDoctor[]) => void> = [];
-
-async function fetchDoctors(): Promise<RawDoctor[]> {
-    if (_cache) return _cache;
-
-    if (_loading) {
-        // Wait for the in-flight request
-        return new Promise((resolve) => {
-            _listeners.push(resolve);
-        });
-    }
-
-    _loading = true;
-    try {
-        const { data, error } = await supabase
-            .from('doctors')
-            .select('*')
-            .limit(3000);
-
-        if (error) {
-            throw error;
-        }
-
-        const docs: RawDoctor[] = (data || []).map((row) => ({
-            name: row.doctor_name || "",
-            qualification: row.qualification || "",
-            specialization: row.specialization || "",
-            designation: row.designation || "",
-            chamber: row.chamber || "",
-            division: row.division || "",
-            imageUrl: row.image_url || "",
-            profileUrl: row.profile_url || "",
-        })).filter((d) => d.name && d.specialization);
-
-        _cache = docs;
-        _loading = false;
-        _listeners.forEach((cb) => cb(docs));
-        _listeners.length = 0;
-        return docs;
-    } catch (e) {
-        console.warn("useDoctors: failed to load from Supabase", e);
-        _loading = false;
-        _cache = [];
-        return [];
-    }
-}
+// Module-level cache removed. We will query Supabase directly on demand.
 
 // ─── Matching logic ────────────────────────────────────────────────────────
 
@@ -170,45 +122,70 @@ function scoreDoctor(doc: RawDoctor, specialistKeyword: string, district: string
 }
 
 export async function queryDoctors(specialistKeyword: string, district = "Dhaka", limit = 3): Promise<RecommendedDoctor[]> {
-    const docs = await fetchDoctors();
-    if (!docs || docs.length === 0) return [];
+    const specLower = specialistKeyword.toLowerCase();
+    
+    // 1. Find matching aliases for the specialty
+    let matchingAliases: string[] = [specLower];
+    for (const [key, aliases] of Object.entries(SPECIALIZATION_ALIASES)) {
+        if (aliases.some((a) => specLower.includes(a)) || specLower.includes(key.toLowerCase())) {
+            matchingAliases = [...new Set([...aliases, key.toLowerCase(), specLower])];
+            break;
+        }
+    }
 
-    const scored = docs
-        .map((doc) => ({ doc, score: scoreDoctor(doc, specialistKeyword, district) }))
-        .filter(({ score }) => score > 0) // score -1 = excluded, 0 = no match
-        .sort((a, b) => b.score - a.score)
-        .slice(0, limit);
+    // Build the .or() query string: "specialization.ilike.%alias1%,specialization.ilike.%alias2%"
+    const orQuery = matchingAliases.map(alias => `specialization.ilike.%${alias}%`).join(',');
 
-    return scored.map(({ doc }) => ({
-        doctorName: doc.name,
-        qualification: doc.qualification,
-        specialization: doc.specialization,
-        designation: doc.designation,
-        chamber: doc.chamber || doc.division,
-    }));
+    try {
+        // 2. Fetch up to 100 candidate doctors matching the specialty from Supabase
+        const { data, error } = await supabase
+            .from('doctors')
+            .select('*')
+            .or(orQuery)
+            .limit(100);
+
+        if (error || !data) {
+            console.warn("queryDoctors failed:", error);
+            return [];
+        }
+
+        const rawDocs: RawDoctor[] = data.map((row) => ({
+            name: row.doctor_name || "",
+            qualification: row.qualification || "",
+            specialization: row.specialization || "",
+            designation: row.designation || "",
+            chamber: row.chamber || "",
+            division: row.division || "",
+            imageUrl: row.image_url || "",
+            profileUrl: row.profile_url || "",
+        }));
+
+        // 3. Score and sort candidates (Geo-location + hard exclusions applied here)
+        const scored = rawDocs
+            .map((doc) => ({ doc, score: scoreDoctor(doc, specialistKeyword, district) }))
+            .filter(({ score }) => score > 0)
+            .sort((a, b) => b.score - a.score)
+            .slice(0, limit);
+
+        return scored.map(({ doc }) => ({
+            doctorName: doc.name,
+            qualification: doc.qualification,
+            specialization: doc.specialization,
+            designation: doc.designation,
+            chamber: doc.chamber || doc.division,
+        }));
+    } catch (e) {
+        console.warn("queryDoctors caught error:", e);
+        return [];
+    }
 }
 
 // ─── React Hook ────────────────────────────────────────────────────────────
 
 export function useDoctors() {
-    const [loaded, setLoaded] = useState(!!_cache);
-    const loadedRef = useRef(loaded);
-    loadedRef.current = loaded;
-
-    useEffect(() => {
-        if (_cache !== null) {
-            if (!loadedRef.current) setLoaded(true);
-            return;
-        }
-        fetchDoctors().then(() => setLoaded(true));
-    }, []);
-
     return {
-        loaded,
-        totalDoctors: _cache?.length ?? 0,
+        loaded: true,
+        totalDoctors: 0,
         queryDoctors,
     };
 }
-
-// Eagerly start loading as soon as this module is imported
-fetchDoctors();

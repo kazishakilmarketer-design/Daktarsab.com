@@ -283,8 +283,8 @@ export async function findHospitalsByLocation(
     const upazilaNorm = normalizeLocationName(upazila);
 
     try {
-        // Strict Local Match: Only return hospitals that match the exact district and (optional) upazila.
-        let query = supabase.from('hospitals').select('*').limit(limit);
+        // Strict Local Match: Only return facilities that match the exact district and (optional) upazila.
+        let query = supabase.from('facilities').select('*').limit(limit);
 
         if (districtNorm) {
             query = query.ilike('district', `%${districtNorm}%`);
@@ -294,40 +294,40 @@ export async function findHospitalsByLocation(
         }
 
         const { data, error } = (await query) as {
-            data: Database["public"]["Tables"]["hospitals"]["Row"][] | null;
+            data: any[] | null;
             error: any;
         };
 
         if (!error && data && data.length > 0) {
             return data.map((h) => ({
                 name: h.name,
-                type: h.type || "বেসরকারি",
+                type: h.facility_type || "বেসরকারি",
                 location: `${h.upazila || ""}${h.upazila && h.district ? ", " : ""}${h.district || ""}`,
-                phone: h.phone || undefined,
+                phone: undefined,
             }));
         }
 
         // LOC-5 FIX: District-only fallback.
-        // If they asked for a specific upazila but we found 0 hospitals there, 
+        // If they asked for a specific upazila but we found 0 facilities there, 
         // try searching just the district instead of failing completely.
         if (upazilaNorm && districtNorm && (!data || data.length === 0)) {
-            console.log(`[LocationAgent] No hospitals in upazila ${upazilaNorm}, falling back to district ${districtNorm}`);
-            const fallbackQuery = supabase.from('hospitals')
+            console.log(`[LocationAgent] No facilities in upazila ${upazilaNorm}, falling back to district ${districtNorm}`);
+            const fallbackQuery = supabase.from('facilities')
                 .select('*')
                 .ilike('district', `%${districtNorm}%`)
                 .limit(limit);
 
             const { data: fallbackData, error: fallbackError } = (await fallbackQuery) as {
-                data: Database["public"]["Tables"]["hospitals"]["Row"][] | null;
+                data: any[] | null;
                 error: any;
             };
 
             if (!fallbackError && fallbackData && fallbackData.length > 0) {
                 return fallbackData.map((h) => ({
                     name: h.name,
-                    type: h.type || "বেসরকারি",
+                    type: h.facility_type || "বেসরকারি",
                     location: `${h.upazila || ""}${h.upazila && h.district ? ", " : ""}${h.district || ""}`,
-                    phone: h.phone || undefined,
+                    phone: undefined,
                 }));
             }
         }
@@ -369,12 +369,28 @@ export async function runDoctorSaabAgents(
     }
 
     const analysis = analyzeSymptom(message, context);
-    const testNames = suggestTests(analysis.recommendedSpecialty || "General Medicine (সাধারণ মেডিসিন)");
+    
+    // AI-6 FIX: Handle conversational fallback (no specialty detected)
+    if (!analysis.recommendedSpecialty) {
+        return {
+            isEmergency: false,
+            emergencyWarning: null,
+            condition: "",
+            immediateAdvice: analysis.routingAdvice,
+            specialistNeeded: "", // Empty to skip CostCard in orchestrator
+            specialistReason: "",
+            hospitals: [],
+            tests: [],
+            followUp: "",
+        };
+    }
+
+    const testNames = suggestTests(analysis.recommendedSpecialty);
     const tests = estimateCost(testNames, context.monthlyIncome);
     const hospitals = await findHospitalsByLocation(context.location || "", context.upazila);
 
     // Fetch doctors directly from Supabase cache using the triaged specialist
-    const rawDoctors = await queryDoctors(analysis.recommendedSpecialty || "General Medicine (সাধারণ মেডিসিন)", context.location || "");
+    const rawDoctors = await queryDoctors(analysis.recommendedSpecialty, context.location || "");
     
     // AI-3 FIX: No Math.random() — use only real DB data. Omit fields if not in DB.
     const recommendedDoctors: RecommendedDoctor[] = rawDoctors.map(doc => ({
@@ -396,9 +412,9 @@ export async function runDoctorSaabAgents(
         isEmergency: false,
         emergencyWarning: null,
         condition: analysis.primarySymptom ? `সম্ভাব্য সমস্যা: ${analysis.primarySymptom}` : "সাধারণ পরামর্শ",
-        immediateAdvice: `আপনার লক্ষণগুলো বিশ্লেষণ করে মনে হচ্ছে এটি ${analysis.recommendedSpecialty || "সাধারণ মেডিসিন"} সংক্রান্ত সমস্যা হতে পারে। ${analysis.routingAdvice}\n\nজরুরী মাত্রা: ${urgencyLabel}`,
-        specialistNeeded: analysis.recommendedSpecialty || "সাধারণ মেডিসিন",
-        specialistReason: `আপনার উল্লেখিত লক্ষণগুলো (যেমন: ${analysis.patientSummary}) অনুযায়ী ${analysis.recommendedSpecialty || "সাধারণ মেডিসিন"} এর পরামর্শ নেওয়া সবচেয়ে নিরাপদ।`,
+        immediateAdvice: `আপনার লক্ষণগুলো বিশ্লেষণ করে মনে হচ্ছে এটি ${analysis.recommendedSpecialty} সংক্রান্ত সমস্যা হতে পারে। ${analysis.routingAdvice}\n\nজরুরী মাত্রা: ${urgencyLabel}`,
+        specialistNeeded: analysis.recommendedSpecialty,
+        specialistReason: `আপনার উল্লেখিত লক্ষণগুলো (যেমন: ${analysis.patientSummary}) অনুযায়ী ${analysis.recommendedSpecialty} এর পরামর্শ নেওয়া সবচেয়ে নিরাপদ।`,
         patientSummary: analysis.patientSummary,
         severity: analysis.severity,
         hospitals,

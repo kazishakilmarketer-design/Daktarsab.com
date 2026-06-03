@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { ClipboardList, CheckCircle, AlertCircle, ChevronRight, Search, Pill, Save, BookOpen, Loader2, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
@@ -20,11 +20,22 @@ const TIPS = [
   { icon: "🏥", title: "সরকারি হাসপাতাল ব্যবহার করুন", body: "অনেক টেস্ট সরকারি হাসপাতালে বিনামূল্যে বা কম খরচে হয়।" },
 ];
 
+interface PrescriptionData {
+  medicines?: { name: string; dosage: string; duration: string }[];
+  diagnosis?: string;
+  doctor_name?: string;
+  notes?: string;
+  generic?: string;
+  price?: string;
+  alternative?: string;
+  altPrice?: string;
+}
+
 interface MedRecord {
   id: string;
   created_at: string;
   title: string;
-  content_data: Record<string, string> | null;
+  content_data: PrescriptionData | null;
 }
 
 function fmtDate(iso: string) {
@@ -43,10 +54,10 @@ export default function Prescription() {
   const [loadingRec, setLoadingRec] = useState(false);
 
   /* ── Load past records for logged-in user ─────────────────────── */
-  async function loadRecords() {
+  const loadRecords = useCallback(async () => {
     if (!user) return;
     setLoadingRec(true);
-    const { data } = await (supabase as any)
+    const { data } = await supabase
       .from("medical_records")
       .select("id, created_at, title, content_data")
       .eq("user_id", user.id)
@@ -55,9 +66,9 @@ export default function Prescription() {
       .limit(15);
     setRecords(data || []);
     setLoadingRec(false);
-  }
+  }, [user]);
 
-  useEffect(() => { loadRecords(); }, [user]);
+  useEffect(() => { loadRecords(); }, [loadRecords]);
 
   const handleSearch = () => {
     const key = query.trim().toLowerCase();
@@ -70,7 +81,7 @@ export default function Prescription() {
   async function handleSave() {
     if (!user || !result) return;
     setSaving(true);
-    await (supabase as any).from("medical_records").insert({
+    await supabase.from("medical_records").insert({
       user_id:      user.id,
       record_type:  "prescription",
       title:        `ওষুধ: ${query.trim()} — ${result.generic}`,
@@ -86,7 +97,7 @@ export default function Prescription() {
 
   /* ── Delete a record ──────────────────────────────────────────── */
   async function handleDelete(id: string) {
-    await (supabase as any).from("medical_records").delete().eq("id", id).eq("user_id", user?.id);
+    await supabase.from("medical_records").delete().eq("id", id).eq("user_id", user?.id);
     setRecords(p => p.filter(r => r.id !== id));
   }
 
@@ -191,7 +202,7 @@ export default function Prescription() {
             ) : (
               <div className="divide-y divide-gray-100">
                 {records.map(r => {
-                  const data: any = r.content_data || {};
+                  const data = r.content_data || {};
                   const isPrescription = !!data.medicines;
                   
                   return (
@@ -219,7 +230,7 @@ export default function Prescription() {
                           <div className="mb-2">
                             <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">Medicines</span>
                             <ul className="mt-1 space-y-1">
-                              {data.medicines.map((m: any, i: number) => (
+                              {data.medicines.map((m: { name: string; dosage: string; duration: string }, i: number) => (
                                 <li key={i} className="text-[12px] flex items-start gap-2">
                                   <span className="text-emerald-500 font-bold">•</span>
                                   <div>

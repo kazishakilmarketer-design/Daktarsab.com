@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { ArrowLeft, UploadCloud, FileText, Trash2, Loader2, Download } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
@@ -21,11 +21,9 @@ export default function TestReports() {
   const [loading, setLoading] = useState(true);
   const [uploading, setUploading] = useState(false);
 
-  useEffect(() => {
-    if (user) loadReports();
-  }, [user]);
 
-  async function loadReports() {
+
+  const loadReports = useCallback(async () => {
     setLoading(true);
     try {
       const { data, error } = await supabase
@@ -36,12 +34,16 @@ export default function TestReports() {
         .order("created_at", { ascending: false });
       if (error) throw error;
       setReports(data || []);
-    } catch (e: any) {
-      toast({ title: "Error", description: e.message, variant: "destructive" });
+    } catch (e: unknown) {
+      toast({ title: "Error", description: e instanceof Error ? e.message : "Unknown error", variant: "destructive" });
     } finally {
       setLoading(false);
     }
-  }
+  }, [user?.id, toast]);
+
+  useEffect(() => {
+    if (user) loadReports();
+  }, [user, loadReports]);
 
   async function handleFileChange(e: React.ChangeEvent<HTMLInputElement>) {
     if (!e.target.files?.[0] || !user) return;
@@ -66,7 +68,7 @@ export default function TestReports() {
       if (uploadErr) throw uploadErr;
 
       // Ensure the meet_link/file_url schema insert
-      const { error: insertErr } = await (supabase as any).from("medical_records").insert({
+      const { error: insertErr } = await supabase.from("medical_records").insert({
         user_id: user.id,
         record_type: "report",
         title: file.name,
@@ -77,8 +79,8 @@ export default function TestReports() {
 
       toast({ title: "সফল", description: "রিপোর্ট সফলভাবে আপলোড হয়েছে!" });
       loadReports();
-    } catch (err: any) {
-      toast({ title: "আপলোড ব্যর্থ", description: err.message, variant: "destructive" });
+    } catch (err: unknown) {
+      toast({ title: "আপলোড ব্যর্থ", description: err instanceof Error ? err.message : "Unknown error", variant: "destructive" });
     } finally {
       setUploading(false);
       e.target.value = ''; // reset
@@ -96,8 +98,8 @@ export default function TestReports() {
 
       toast({ title: "সফল", description: "রিপোর্ট মুছে ফেলা হয়েছে।" });
       setReports(r => r.filter(x => x.id !== id));
-    } catch (err: any) {
-      toast({ title: "ত্রুটি", description: err.message, variant: "destructive" });
+    } catch (err: unknown) {
+      toast({ title: "ত্রুটি", description: err instanceof Error ? err.message : "Unknown error", variant: "destructive" });
     }
   }
 
@@ -106,8 +108,8 @@ export default function TestReports() {
       const { data, error } = await supabase.storage.from("patient_documents").createSignedUrl(file_url, 60);
       if (error) throw error;
       if (data?.signedUrl) window.open(data.signedUrl, '_blank');
-    } catch (err: any) {
-      toast({ title: "ডাউনলোড ব্যর্থ", description: err.message, variant: "destructive" });
+    } catch (err: unknown) {
+      toast({ title: "ডাউনলোড ব্যর্থ", description: err instanceof Error ? err.message : "Unknown error", variant: "destructive" });
     }
   }
 
