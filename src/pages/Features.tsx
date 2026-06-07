@@ -1,5 +1,4 @@
 import { Construction, LayoutList, Pill, RefreshCcw, FileText, UploadCloud, TestTube, Microscope, HeartPulse } from "lucide-react";
-import Header from "@/components/Header";
 import { Badge } from "@/components/ui/badge";
 import { motion } from "framer-motion";
 
@@ -50,7 +49,6 @@ export default function Features() {
 
   return (
     <div className="flex h-screen flex-col bg-slate-50">
-      <Header />
       <div className="flex-1 overflow-y-auto px-4 py-8 md:px-8">
         <div className="mx-auto max-w-4xl space-y-10">
           

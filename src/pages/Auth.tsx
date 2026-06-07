@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import doctorAvatar from "@/assets/doctor-avatar.png";
 import TermsAndConditionsModal from "@/components/TermsAndConditionsModal";
 import Logo from "@/components/Logo";
+import { getAuthRedirectUrl } from "@/utils/authRedirect";
 
 export default function Auth() {
   const [mode, setMode] = useState<"login" | "signup">("login");
@@ -37,7 +38,7 @@ export default function Auth() {
           password,
           options: {
             data: { display_name: name },
-            emailRedirectTo: window.location.origin,
+            emailRedirectTo: getAuthRedirectUrl("complete-profile"),
           },
         });
         if (error) throw error;
@@ -66,7 +67,7 @@ export default function Auth() {
     const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/home`,
+        redirectTo: getAuthRedirectUrl("home"),
         queryParams: {
           access_type: 'offline',
           prompt: 'consent',

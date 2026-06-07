@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { supabase } from "@/integrations/supabase/client";
+import { getAuthRedirectUrl } from "@/utils/authRedirect";
 
 interface LeadGateModalProps {
   open: boolean;
@@ -49,7 +50,7 @@ export default function LeadGateModal({ open, onOpenChange, onGuestContinue }: L
               onClick={async () => {
                 await supabase.auth.signInWithOAuth({
                   provider: "google",
-                  options: { redirectTo: `${window.location.origin}/` },
+                  options: { redirectTo: getAuthRedirectUrl("home") },
                 });
               }}
             >

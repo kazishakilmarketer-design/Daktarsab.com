@@ -484,7 +484,7 @@ export default function LandingPage() {
                                 </p>
                                 <Button size="lg"
                                     className="gap-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 px-8 font-bold text-white shadow-xl shadow-emerald-500/20 hover:from-emerald-400 hover:to-emerald-500 min-h-[52px]"
-                                    onClick={() => window.location.href = "/join-as-partner"}>
+                                    onClick={() => navigate("/join-as-partner")}>
                                     <Building2 className="h-5 w-5" /> পার্টনার হিসেবে আজই যোগ দিন <ArrowRight className="h-4 w-4" />
                                 </Button>
                                 <p className="mt-3 text-xs text-gray-500">কোনো সেটআপ ফি নেই · ২৪ ঘণ্টার মধ্যে অ্যাক্টিভেশন</p>

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { ClipboardList, CheckCircle, AlertCircle, ChevronRight, Search, Pill, Save, BookOpen, Loader2, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "@/hooks/useAuth";
+import { useNavigate, Link } from "react-router-dom";
 
 /* ── Medicine price database ─────────────────────────────────────── */
 const MEDICINE_PRICES: Record<string, { generic: string; price: string; alternative: string; altPrice: string }> = {
@@ -45,6 +46,7 @@ function fmtDate(iso: string) {
 
 export default function Prescription() {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const [query, setQuery]     = useState("");
   const [result, setResult]   = useState<typeof MEDICINE_PRICES[string] | null>(null);
   const [notFound, setNotFound] = useState(false);
@@ -167,7 +169,7 @@ export default function Prescription() {
                 )
               ) : (
                 <p className="mt-3 text-[11px] text-gray-400">
-                  💡 রেকর্ড সেভ করতে <a href="/auth" className="text-violet-600 font-bold underline">লগইন করুন</a>
+                  💡 রেকর্ড সেভ করতে <Link to="/auth" className="text-violet-600 font-bold underline">লগইন করুন</Link>
                 </p>
               )}
             </div>
@@ -287,7 +289,7 @@ export default function Prescription() {
         {/* CTA */}
         <div
           className="bg-gradient-to-r from-violet-600 to-indigo-600 rounded-2xl p-5 flex items-center justify-between mb-4 cursor-pointer"
-          onClick={() => window.location.href = "/chat"}
+          onClick={() => navigate("/chat")}
         >
           <div>
             <p className="text-[14px] font-extrabold text-white">ডাক্তারের পরামর্শ নিন</p>

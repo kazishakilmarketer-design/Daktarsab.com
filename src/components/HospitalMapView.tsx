@@ -412,7 +412,9 @@ export default function HospitalMapView() {
   const [userPos, setUserPos] = useState<[number, number] | null>(null);
   const [mapMode, setMapMode] = useState<"loading" | "google" | "leaflet">("loading");
   const { profile } = usePatient();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const filterType = searchParams.get("filter") || "all";
 
   // ── Load CSV ────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -433,6 +435,8 @@ export default function HospitalMapView() {
         const district = BN_TO_EN[rawDistrict] ?? rawDistrict;
         const upazila = profile.upazila ?? "";
         let filtered = all;
+        
+        // Apply location filtering
         if (district) {
           filtered = filtered.filter((h) =>
             h.district.toLowerCase().includes(district.toLowerCase()) ||
@@ -442,6 +446,54 @@ export default function HospitalMapView() {
         if (upazila) {
           filtered = filtered.filter((h) =>
             h.upazila.toLowerCase().includes(upazila.toLowerCase())
+          );
+        }
+
+        // Apply category filtering
+        if (filterType === "hospital") {
+          filtered = filtered.filter((h) => 
+            h.name.toLowerCase().includes("hospital") || 
+            h.name.toLowerCase().includes("হাসপাতাল") ||
+            h.name.toLowerCase().includes("medical") ||
+            h.name.toLowerCase().includes("মেডিকেল") ||
+            h.name.toLowerCase().includes("clinic") ||
+            h.name.toLowerCase().includes("ক্লিনিক")
+          );
+        } else if (filterType === "diagnostic") {
+          filtered = filtered.filter((h) => 
+            h.name.toLowerCase().includes("diagnostic") || 
+            h.name.toLowerCase().includes("diagonostic") || 
+            h.name.toLowerCase().includes("ডায়াগনস্টিক") ||
+            h.name.toLowerCase().includes("lab") ||
+            h.name.toLowerCase().includes("ল্যাব") ||
+            h.name.toLowerCase().includes("imaging") ||
+            h.name.toLowerCase().includes("x-ray") ||
+            h.name.toLowerCase().includes("pathology")
+          );
+        } else if (filterType === "blood") {
+          filtered = filtered.filter((h) => 
+            h.name.toLowerCase().includes("blood") || 
+            h.name.toLowerCase().includes("transfusion") || 
+            h.name.toLowerCase().includes("রক্ত") ||
+            h.name.toLowerCase().includes("ব্লাড") ||
+            h.name.toLowerCase().includes("donor") ||
+            h.name.toLowerCase().includes("ডোনার")
+          );
+        } else if (filterType === "ambulance") {
+          filtered = filtered.filter((h) => 
+            h.name.toLowerCase().includes("ambulance") || 
+            h.name.toLowerCase().includes("অ্যাম্বুলেন্স") ||
+            // Fallback: show hospitals that offer ambulance services
+            h.category.toLowerCase() === "government" ||
+            h.name.toLowerCase().includes("hospital") ||
+            h.name.toLowerCase().includes("হাসপাতাল")
+          );
+        } else if (filterType === "emergency") {
+          filtered = filtered.filter((h) => 
+            h.category.toLowerCase() === "government" || 
+            h.category.toLowerCase() === "premium" ||
+            h.name.toLowerCase().includes("hospital") ||
+            h.name.toLowerCase().includes("হাসপাতাল")
           );
         }
         
@@ -459,7 +511,7 @@ export default function HospitalMapView() {
       }
     })();
     return () => { cancelled = true; };
-  }, [profile.location, profile.upazila]);
+  }, [profile.location, profile.upazila, filterType]);
 
   // ── Geolocation ─────────────────────────────────────────────────────────
   const detectLocation = useCallback(() => {
@@ -579,6 +631,29 @@ export default function HospitalMapView() {
           </p>
         </div>
       )}
+
+      {/* Floating Category Filter Chips */}
+      <div className="absolute left-1/2 -translate-x-1/2 bottom-3 z-[1000] flex gap-1.5 overflow-x-auto no-scrollbar max-w-[90%] bg-card/95 p-1.5 rounded-2xl border border-border shadow-lg backdrop-blur-sm">
+        {[
+          { id: "all", label: "সব" },
+          { id: "hospital", label: "হাসপাতাল" },
+          { id: "diagnostic", label: "ডায়াগনস্টিক" },
+          { id: "ambulance", label: "অ্যাম্বুলেন্স" },
+          { id: "blood", label: "ব্লাড ব্যাংক" },
+        ].map((tab) => (
+          <button
+            key={tab.id}
+            onClick={() => setSearchParams({ filter: tab.id })}
+            className={`px-3 py-1 text-[11px] font-bold rounded-xl whitespace-nowrap transition-all ${
+              filterType === tab.id
+                ? "bg-emerald-600 text-white shadow-sm"
+                : "text-gray-600 hover:bg-slate-100"
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
 
       {/* Map container */}
       <div ref={mapRef} className="flex-1" style={{ minHeight: "300px" }} />

@@ -153,6 +153,63 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, [checkProfile]);
 
+  useEffect(() => {
+    // Dynamic import to prevent crash on web platforms where Capacitor plugins don't load
+    import("@capacitor/app")
+      .then(({ App }) => {
+        App.addListener("appUrlOpen", async (data: { url: string }) => {
+          console.log("[DeepLink] Opened app with URL:", data.url);
+          try {
+            // Replace custom scheme to normalize URL protocol for parsing
+            const normalized = data.url.replace("com.doctorsaab.app://", "http://localhost/");
+            const parsedUrl = new URL(normalized);
+
+            // 1. PKCE Auth Flow (Magic Link / Code Exchange)
+            const code = parsedUrl.searchParams.get("code");
+            if (code) {
+              console.log("[DeepLink] Exchanging code for session...");
+              const { error } = await supabase.auth.exchangeCodeForSession(code);
+              if (error) {
+                console.error("[DeepLink] Code exchange error:", error);
+              } else {
+                console.log("[DeepLink] Code exchange successful!");
+                // Route inside local WebView
+                window.location.href = parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
+              }
+              return;
+            }
+
+            // 2. Implicit Auth Flow (OAuth hash parameters)
+            const hash = parsedUrl.hash;
+            if (hash) {
+              const params = new URLSearchParams(hash.substring(1));
+              const accessToken = params.get("access_token");
+              const refreshToken = params.get("refresh_token");
+              if (accessToken && refreshToken) {
+                console.log("[DeepLink] Setting session from hash...");
+                const { error } = await supabase.auth.setSession({
+                  access_token: accessToken,
+                  refresh_token: refreshToken,
+                });
+                if (error) {
+                  console.error("[DeepLink] Set session error:", error);
+                } else {
+                  console.log("[DeepLink] Set session successful!");
+                  // Route inside local WebView
+                  window.location.href = parsedUrl.pathname + parsedUrl.search + parsedUrl.hash;
+                }
+              }
+            }
+          } catch (err) {
+            console.error("[DeepLink] Error parsing deep link URL:", err);
+          }
+        });
+      })
+      .catch((err) => {
+        console.log("[DeepLink] Capacitor App plugin not loaded (normal in web browsers).", err);
+      });
+  }, []);
+
   const signOut = async () => {
     await supabase.auth.signOut();
     setHasCompletedProfile(false);

@@ -46,13 +46,41 @@ export default function HomeDashboard() {
   const navigate = useNavigate();
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("ডাক্তার");
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const handleSearch = () => {
+    const query = searchQuery.trim().toLowerCase();
+    
+    // Check if the user is explicitly searching for ambulance or using the Ambulance tab
+    if (activeTab === "অ্যাম্বুলেন্স" || query === "ambulance" || query === "ambulence" || query === "অ্যাম্বুলেন্স") {
+      navigate("/hospital-map?filter=ambulance");
+      return;
+    }
+    
+    if (activeTab === "ব্লাড ব্যাংক" || query === "blood" || query === "ব্লাড" || query === "রক্ত") {
+      navigate("/hospital-map?filter=blood");
+      return;
+    }
+    
+    if (activeTab === "ক্লিনিক" || query === "clinic" || query === "ক্লিনিক" || query === "হাসপাতাল" || query === "hospital") {
+      navigate("/hospital-map?filter=hospital");
+      return;
+    }
+    
+    // Default: Doctor search. Pass search query parameter
+    if (searchQuery.trim()) {
+      navigate(`/doctors?search=${encodeURIComponent(searchQuery.trim())}`);
+    } else {
+      navigate("/doctors");
+    }
+  };
 
   const quickActions = [
-    { icon: <AlertCircle className="text-red-500" size={24} />, label: "জরুরি", colorClass: "qa-emergency", path: "/hospital-map" },
-    { icon: <Hospital className="text-blue-500" size={24} />, label: "হাসপাতাল", colorClass: "qa-hospital", path: "/hospital-map" },
-    { icon: <ActivitySquare className="text-amber-500" size={24} />, label: "অ্যাম্বুলেন্স", colorClass: "qa-ambulance", path: "/hospital-map" },
-    { icon: <HeartPulse className="text-red-500" size={24} />, label: "ব্লাড ব্যাংক", colorClass: "qa-blood", path: "/hospital-map" },
-    { icon: <TestTubes className="text-green-500" size={24} />, label: "ডায়াগনস্টিক", colorClass: "qa-test", path: "/hospital-map" },
+    { icon: <AlertCircle className="text-red-500" size={24} />, label: "জরুরি", colorClass: "qa-emergency", path: "/hospital-map?filter=emergency" },
+    { icon: <Hospital className="text-blue-500" size={24} />, label: "হাসপাতাল", colorClass: "qa-hospital", path: "/hospital-map?filter=hospital" },
+    { icon: <ActivitySquare className="text-amber-500" size={24} />, label: "অ্যাম্বুলেন্স", colorClass: "qa-ambulance", path: "/hospital-map?filter=ambulance" },
+    { icon: <HeartPulse className="text-red-500" size={24} />, label: "ব্লাড ব্যাংক", colorClass: "qa-blood", path: "/hospital-map?filter=blood" },
+    { icon: <TestTubes className="text-green-500" size={24} />, label: "ডায়াগনস্টিক", colorClass: "qa-test", path: "/hospital-map?filter=diagnostic" },
     { icon: <Pill className="text-purple-500" size={24} />, label: "ফার্মেসি", colorClass: "qa-medicine", path: "/pharmacy" },
     { icon: <PhoneCall className="text-teal-500" size={24} />, label: "টেলিমেডিসিন", colorClass: "qa-telemedicine", path: "/chat" },
     { icon: <Settings className="text-gray-500" size={24} />, label: "অন্যান্য", colorClass: "qa-more", path: "/profile" },
@@ -159,6 +187,11 @@ export default function HomeDashboard() {
               <div className="flex items-center gap-2 p-1 relative w-full">
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") handleSearch();
+                  }}
                   placeholder={
                     activeTab === 'ডাক্তার' ? "বিশেষজ্ঞ ডাক্তার খুঁজুন..." :
                     activeTab === 'অ্যাম্বুলেন্স' ? "অ্যাম্বুলেন্স খুঁজুন..." :
@@ -168,7 +201,7 @@ export default function HomeDashboard() {
                   className="flex-1 bg-transparent text-[13px] outline-none placeholder:text-gray-400 font-medium pl-2"
                 />
                 <button 
-                  onClick={() => navigate("/doctors")}
+                  onClick={handleSearch}
                   className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl px-5 h-10 text-[13px] font-bold shadow-md shadow-emerald-200 transition-all active:scale-95"
                 >
                   খুঁজুন
@@ -331,7 +364,7 @@ export default function HomeDashboard() {
                   <p className="mb-6 text-[13px] leading-relaxed text-gray-400">
                       সরাসরি <span className="font-semibold text-white">হাই-ইনটেন্ট রোগী</span> পান। চেম্বার, ল্যাব, নাকি টেলিহেলথ—যেটাই হোক, ডাক্তার সাব আপনার সবচেয়ে বিশ্বস্ত ডিজিটাল মাধ্যম।
                   </p>
-                  <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-6 py-3.5 text-[14px] font-bold text-white shadow-xl shadow-emerald-500/20 active:scale-95 transition-transform" onClick={() => window.location.href = "/join-as-partner"}>
+                  <button className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-emerald-500 to-emerald-600 px-6 py-3.5 text-[14px] font-bold text-white shadow-xl shadow-emerald-500/20 active:scale-95 transition-transform" onClick={() => navigate("/join-as-partner")}>
                       <Building2 className="h-4 w-4" /> পার্টনার হিসেবে আজই যোগ দিন <ArrowRight className="h-4 w-4" />
                   </button>
                   <p className="mt-3 text-center text-[10px] text-gray-500">কোনো সেটআপ ফি নেই · ২৪ ঘণ্টার মধ্যে অ্যাক্টিভেশন</p>

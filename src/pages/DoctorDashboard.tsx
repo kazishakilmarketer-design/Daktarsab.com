@@ -7,6 +7,7 @@
  * ✅ [P0] Real booking_requests data from Supabase
  */
 import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { Eye, EyeOff, LogOut, Mail, Lock, Menu, X, Loader2, RefreshCw, Phone, FileText, Video } from "lucide-react";
 import Logo from "@/components/Logo";
 import { supabase } from "@/integrations/supabase/client";
@@ -383,7 +384,7 @@ export default function DoctorDashboard() {
             </button>
           </form>
           <p style={{ textAlign: "center", fontSize: 12, color: "#94A3B8", marginTop: 20 }}>
-            নিবন্ধিত নন? <a href="/join-as-partner" style={{ color: "#0F6E56", fontWeight: 700 }}>এখানে আবেদন করুন</a>
+            নিবন্ধিত নন? <Link to="/join-as-partner" style={{ color: "#0F6E56", fontWeight: 700 }}>এখানে আবেদন করুন</Link>
           </p>
         </div>
       </div>

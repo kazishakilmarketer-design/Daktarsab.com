@@ -3,7 +3,7 @@
  * Falls back to graceful skeleton/empty-state while loading.
  */
 import { useState, useMemo, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { Search, Star, Clock, ChevronRight, X, SlidersHorizontal, Loader2, RefreshCw, Stethoscope } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { DoctorCard } from "@/components/cards/DoctorCard";
@@ -90,15 +90,43 @@ function SkeletonCard() {
 }
 
 /* ── Main component ─────────────────────────────────────────────────── */
+function normalizeSpecialtyParam(specParam: string | null): string {
+  if (!specParam) return "সব";
+  const p = specParam.trim();
+  if (p === "হৃদরোগ" || p === "কার্ডিওলজি") return "কার্ডিওলজি";
+  if (p === "স্নায়ু" || p === "নিউরো") return "নিউরো";
+  if (p === "অর্থোপেডিক" || p === "অর্থো") return "অর্থো";
+  if (p === "চোখ" || p === "চক্ষু") return "চক্ষু";
+  if (p === "ডেন্টাল") return "ডেন্টাল";
+  if (p === "শিশু") return "শিশু";
+  if (p === "মেডিসিন") return "মেডিসিন";
+  if (p === "গাইনী") return "গাইনী";
+  if (p === "চর্ম") return "চর্ম";
+  if (p === "ইএনটি") return "ইএনটি";
+  return p;
+}
+
 export default function Doctors() {
+  const [searchParams] = useSearchParams();
+  const initialSearch = searchParams.get("search") || "";
+  const initialSpecialty = normalizeSpecialtyParam(searchParams.get("specialty"));
+
   const [doctors, setDoctors]     = useState<Doctor[]>([]);
   const [loading, setLoading]     = useState(true);
   const [error, setError]         = useState("");
-  const [search, setSearch]       = useState("");
-  const [activeSpec, setActiveSpec] = useState("সব");
+  const [search, setSearch]       = useState(initialSearch);
+  const [activeSpec, setActiveSpec] = useState(initialSpecialty);
   const [showFilter, setShowFilter] = useState(false);
   const [sortBy, setSortBy]       = useState<"name" | "fee" | "exp">("name");
   const [booking, setBooking]     = useState<{ open: boolean; doc: Doctor | null }>({ open: false, doc: null });
+
+  // Sync state with URL params changes
+  useEffect(() => {
+    const qSearch = searchParams.get("search") || "";
+    const qSpec = normalizeSpecialtyParam(searchParams.get("specialty"));
+    setSearch(qSearch);
+    setActiveSpec(qSpec);
+  }, [searchParams]);
 
   /* ── Fetch doctors ───────────────────────────────────────────────── */
   async function fetchDoctors() {

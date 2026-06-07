@@ -7,6 +7,7 @@
  * ✅ [P0] Real booking_requests data from Supabase
  */
 import { useState, useEffect, useCallback } from "react";
+import { Link } from "react-router-dom";
 import { Eye, EyeOff, LogOut, Mail, Lock, Menu, X, Loader2, RefreshCw, Phone } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -307,7 +308,7 @@ export default function PartnerDashboard() {
             </button>
           </form>
           <p style={{ textAlign: "center", fontSize: 12, color: "#9CA3AF", marginTop: 20 }}>
-            নিবন্ধিত নন? <a href="/join-as-partner" style={{ color: G.g5, fontWeight: 700 }}>এখানে আবেদন করুন</a>
+            নিবন্ধিত নন? <Link to="/join-as-partner" style={{ color: G.g5, fontWeight: 700 }}>এখানে আবেদন করুন</Link>
           </p>
         </div>
       </div>

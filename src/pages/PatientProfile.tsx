@@ -61,7 +61,7 @@ export default function PatientProfile() {
             <div className="flex-1 min-w-0">
               <div className="text-[13px] font-bold text-white mb-0.5">স্বাস্থ্য কার্ড</div>
               <div className="text-[11px] text-white/70">
-                ব্লাড গ্রুপ: N/A · বয়স: {userProfile?.age || profile?.age || "N/A"} · {userProfile?.gender || profile?.gender || "লিঙ্গ"}
+                ব্লাড গ্রুপ: {userProfile?.blood_group || "N/A"} · বয়স: {userProfile?.age || profile?.age || "N/A"} · {userProfile?.gender || profile?.gender || "লিঙ্গ"}
               </div>
             </div>
             <div className="text-white/40"><ChevronRight className="h-5 w-5" /></div>

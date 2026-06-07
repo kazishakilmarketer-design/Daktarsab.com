@@ -5,6 +5,7 @@
  * Mobile: single-column stacked. Tablet+: form + sidebar side-by-side.
  */
 import { useState, useEffect, useRef } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { ChevronLeft, ChevronRight, Check, User, Stethoscope, MapPin, Zap, Camera, Eye, EyeOff } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { notifyNewPartnerRegistration } from "@/lib/notificationService";
@@ -138,6 +139,7 @@ const VALUE_PROPS: Record<Step, { emoji: string; text: string }[]> = {
 
 /* ─── Main Component ────────────────────────────────────────────────── */
 export default function JoinAsPartner() {
+  const navigate = useNavigate();
   const isMobile = useIsMobile(768);
   const [step, setStep] = useState<Step>(1);
   const [form, setForm] = useState<FormData>(INITIAL);
@@ -226,7 +228,7 @@ export default function JoinAsPartner() {
             <div key={l} style={{ fontSize: 12 }}><span style={{ color: "#64748B" }}>{l}</span><div style={{ fontWeight: 700 }}>{v}</div></div>
           ))}
         </div>
-        <a href="/doctor-dashboard" style={{ display: "block", background: "#0F6E56", color: "#fff", padding: 12, borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: "none" }}>ড্যাশবোর্ডে যান →</a>
+        <Link to="/doctor-dashboard" style={{ display: "block", background: "#0F6E56", color: "#fff", padding: 12, borderRadius: 10, fontSize: 14, fontWeight: 700, textDecoration: "none" }}>ড্যাশবোর্ডে যান →</Link>
       </div>
     </div>
   );
@@ -609,7 +611,7 @@ export default function JoinAsPartner() {
 
             <div style={{ background: "#F8FAF9", borderRadius: 12, border: "1px solid #E2E8F0", padding: 14, textAlign: "center" }}>
               <p style={{ fontSize: 12, color: "#64748B", margin: "0 0 8px" }}>আগে থেকে নিবন্ধিত?</p>
-              <a href="/doctor-dashboard" style={{ fontSize: 13, fontWeight: 700, color: "#0F6E56", textDecoration: "none" }}>ড্যাশবোর্ডে লগইন →</a>
+              <Link to="/doctor-dashboard" style={{ fontSize: 13, fontWeight: 700, color: "#0F6E56", textDecoration: "none" }}>ড্যাশবোর্ডে লগইন →</Link>
             </div>
           </div>
         )}
@@ -618,7 +620,7 @@ export default function JoinAsPartner() {
         {isMobile && (
           <div style={{ padding: "12px 18px 32px", textAlign: "center", background: "#fff" }}>
             <p style={{ fontSize: 12, color: "#64748B", margin: "0 0 6px" }}>আগে থেকে নিবন্ধিত?</p>
-            <a href="/doctor-dashboard" style={{ fontSize: 13, fontWeight: 700, color: "#0F6E56", textDecoration: "none" }}>ড্যাশবোর্ডে লগইন →</a>
+            <Link to="/doctor-dashboard" style={{ fontSize: 13, fontWeight: 700, color: "#0F6E56", textDecoration: "none" }}>ড্যাশবোর্ডে লগইন →</Link>
           </div>
         )}
       </div>

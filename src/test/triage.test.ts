@@ -5,7 +5,10 @@ import type { PatientContext } from "@/lib/aiChat";
 
 // Mock Supabase client for hospital lookup
 vi.mock("@/integrations/supabase/client", () => {
-  const from = vi.fn();
+  const insertMock = vi.fn().mockResolvedValue({ data: null, error: null });
+  const from = vi.fn().mockReturnValue({
+    insert: insertMock,
+  });
   return {
     supabase: {
       from,
