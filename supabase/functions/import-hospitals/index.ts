@@ -21,8 +21,44 @@ Deno.serve(async (req) => {
 
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL")!;
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
-    const supabase = createClient(supabaseUrl, supabaseKey);
+    const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
+    const anonKey = Deno.env.get("SUPABASE_ANON_KEY") || serviceRoleKey;
+
+    // Verify Authorization Header
+    const authHeader = req.headers.get("Authorization");
+    if (!authHeader) {
+      return new Response(JSON.stringify({ error: "Missing Authorization header" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Verify token validity
+    const userClient = createClient(supabaseUrl, anonKey, {
+      global: { headers: { Authorization: authHeader } },
+    });
+    const { data: { user }, error: userErr } = await userClient.auth.getUser();
+    if (userErr || !user) {
+      return new Response(JSON.stringify({ error: "Unauthorized user session" }), {
+        status: 401,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
+
+    // Verify admin role in profiles table
+    const serviceClient = createClient(supabaseUrl, serviceRoleKey);
+    const { data: profile, error: profileErr } = await serviceClient
+      .from("profiles")
+      .select("role")
+      .eq("user_id", user.id)
+      .maybeSingle();
+
+    if (profileErr || profile?.role !== "admin") {
+      return new Response(JSON.stringify({ error: "Forbidden: Admin role required" }), {
+        status: 403,
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+      });
+    }
 
     const { csvData } = await req.json();
     if (!csvData || !Array.isArray(csvData)) {
@@ -33,7 +69,7 @@ Deno.serve(async (req) => {
     }
 
     // Clear existing hospitals first
-    await supabase.from("hospitals").delete().neq("id", "00000000-0000-0000-0000-000000000000");
+    await serviceClient.from("hospitals").delete().neq("id", "00000000-0000-0000-0000-000000000000");
 
     // Batch insert in chunks of 500
     const BATCH = 500;
@@ -49,7 +85,7 @@ Deno.serve(async (req) => {
         phone: row.contact?.trim() || null,
       }));
 
-      const { error } = await supabase.from("hospitals").insert(batch);
+      const { error } = await serviceClient.from("hospitals").insert(batch);
       if (error) {
         console.error(`Batch ${i} error:`, error);
         return new Response(JSON.stringify({ error: error.message, inserted }), {

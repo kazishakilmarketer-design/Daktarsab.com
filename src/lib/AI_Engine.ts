@@ -180,6 +180,14 @@ export function analyzeSymptom(inputText: string, context: PatientContext): Engi
   return result;
 }
 
+function maskPII(text: string): string {
+  const phoneRegex = /(\+?88)?01[3-9]\d{8}/g;
+  const emailRegex = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g;
+  return text
+    .replace(phoneRegex, "[PHONE_MASKED]")
+    .replace(emailRegex, "[EMAIL_MASKED]");
+}
+
 /**
  * Logs each AI triage decision to the symptom_logs table.
  * Fire-and-forget — never blocks the main triage flow.
@@ -189,7 +197,7 @@ async function logSymptomTriage(rawMessage: string, result: EngineResult, score:
     const { data: { user } } = await supabase.auth.getUser();
     await (supabase as any).from("symptom_logs").insert({
       user_id: user?.id || null,
-      raw_message: rawMessage.slice(0, 500),
+      raw_message: maskPII(rawMessage).slice(0, 500),
       detected_severity: result.severity,
       detected_specialty: result.recommendedSpecialty,
       engine_score: score,

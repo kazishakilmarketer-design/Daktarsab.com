@@ -81,7 +81,7 @@ describe("Hospital locator filters by district and upazila", () => {
     const { findHospitalsByLocation } = await import("@/lib/doctorSaabAgents");
     const hospitals = await findHospitalsByLocation("বগুড়া", "শাজাহানপুর", 2);
 
-    expect(supabase.from).toHaveBeenCalledWith("facilities");
+    expect(supabase.from).toHaveBeenCalledWith("hospitals");
     expect(query.ilike).toHaveBeenCalledWith("district", "%বগুড়া%");
     expect(query.ilike).toHaveBeenCalledWith("upazila", "%শাজাহানপুর%");
 

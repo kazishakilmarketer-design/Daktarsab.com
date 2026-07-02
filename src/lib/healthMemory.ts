@@ -13,8 +13,9 @@ export async function saveConsultationToHistory(
 ) {
   try {
     const { error } = await (supabase.from("medical_records") as any).insert({
-      patient_id: userId,
-      type: "summary",
+      user_id: userId,
+      record_type: "summary",
+      title: `AI পরামর্শ: ${analysis.condition || "সাধারণ সমস্যা"}`,
       content_data: {
         symptom: userMessage,
         condition: analysis.condition,
@@ -42,7 +43,8 @@ export async function getMedicalHistory(userId: string) {
   const { data, error } = await supabase
     .from("medical_records")
     .select("*")
-    .eq("patient_id", userId)
+    .eq("user_id", userId)
+    .eq("record_type", "summary")
     .order("created_at", { ascending: false });
 
   if (error) {

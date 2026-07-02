@@ -44,9 +44,21 @@ const PARTNER_BENEFITS = [
 
 export default function HomeDashboard() {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, userProfile } = useAuth();
   const [activeTab, setActiveTab] = useState("ডাক্তার");
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    if (userProfile?.role) {
+      if (userProfile.role === "doctor") {
+        navigate("/doctor-dashboard", { replace: true });
+      } else if (userProfile.role === "partner") {
+        navigate("/partner-dashboard", { replace: true });
+      } else if (userProfile.role === "admin" || userProfile.role === "kazi") {
+        navigate("/kazi", { replace: true });
+      }
+    }
+  }, [userProfile, navigate]);
 
   const handleSearch = () => {
     const query = searchQuery.trim().toLowerCase();
@@ -120,7 +132,7 @@ export default function HomeDashboard() {
         const [consultRes, doctorRes, hospitalRes] = await Promise.all([
           (supabase as any).from("medical_records").select("id", { count: "exact", head: true }),
           (supabase as any).from("doctors").select("id", { count: "exact", head: true }),
-          (supabase as any).from("facilities").select("id", { count: "exact", head: true }),
+          (supabase as any).from("hospitals").select("id", { count: "exact", head: true }),
         ]);
 
         setLiveStats([

@@ -283,8 +283,8 @@ export async function findHospitalsByLocation(
     const upazilaNorm = normalizeLocationName(upazila);
 
     try {
-        // Strict Local Match: Only return facilities that match the exact district and (optional) upazila.
-        let query = supabase.from('facilities').select('*').limit(limit);
+        // Strict Local Match: Only return hospitals that match the exact district and (optional) upazila.
+        let query = supabase.from('hospitals').select('*').limit(limit);
 
         if (districtNorm) {
             query = query.ilike('district', `%${districtNorm}%`);
@@ -301,18 +301,18 @@ export async function findHospitalsByLocation(
         if (!error && data && data.length > 0) {
             return data.map((h) => ({
                 name: h.name,
-                type: h.facility_type || "বেসরকারি",
+                type: h.type || "বেসরকারি",
                 location: `${h.upazila || ""}${h.upazila && h.district ? ", " : ""}${h.district || ""}`,
                 phone: undefined,
             }));
         }
 
         // LOC-5 FIX: District-only fallback.
-        // If they asked for a specific upazila but we found 0 facilities there, 
+        // If they asked for a specific upazila but we found 0 hospitals there, 
         // try searching just the district instead of failing completely.
         if (upazilaNorm && districtNorm && (!data || data.length === 0)) {
-            console.log(`[LocationAgent] No facilities in upazila ${upazilaNorm}, falling back to district ${districtNorm}`);
-            const fallbackQuery = supabase.from('facilities')
+            console.log(`[LocationAgent] No hospitals in upazila ${upazilaNorm}, falling back to district ${districtNorm}`);
+            const fallbackQuery = supabase.from('hospitals')
                 .select('*')
                 .ilike('district', `%${districtNorm}%`)
                 .limit(limit);
@@ -325,7 +325,7 @@ export async function findHospitalsByLocation(
             if (!fallbackError && fallbackData && fallbackData.length > 0) {
                 return fallbackData.map((h) => ({
                     name: h.name,
-                    type: h.facility_type || "বেসরকারি",
+                    type: h.type || "বেসরকারি",
                     location: `${h.upazila || ""}${h.upazila && h.district ? ", " : ""}${h.district || ""}`,
                     phone: undefined,
                 }));

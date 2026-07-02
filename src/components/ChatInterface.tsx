@@ -48,6 +48,9 @@ interface ChatInterfaceProps {
 }
 
 export default function ChatInterface({ initialPrompt, onShowResults, onAiResults }: ChatInterfaceProps) {
+  // UI state for Adaptive Triage UI
+  const [mode, setMode] = useState<'emergency' | 'normal' | 'deep'>("normal");
+  const [symptomSummary, setSymptomSummary] = useState<Record<string, string>>({});
   const { profile, setProfile, treatmentTier, isGuest, addRewardPoints, activeMember, familyMembers } = usePatient();
   const { user } = useAuth();
   const { toast } = useToast();
@@ -376,7 +379,7 @@ export default function ChatInterface({ initialPrompt, onShowResults, onAiResult
         <div className="flex items-center justify-between">
           <div className="chat-ai-info">
             <div className="chat-ai-av relative">
-              🤖
+              <img src={doctorAvatar} alt="Doctor Avatar" className="w-full h-full object-cover rounded-[13px]" />
               <div className="absolute w-2.5 h-2.5 rounded-full border-2 border-[var(--g7)] bg-[var(--g3)] -bottom-1 -right-1" />
             </div>
             <div>
@@ -387,6 +390,18 @@ export default function ChatInterface({ initialPrompt, onShowResults, onAiResult
               </div>
             </div>
           </div>
+          {/* Mode selector badge */}
+          <div className="mode-badge cursor-pointer" onClick={() => {
+            const next = mode === "normal" ? "deep" : mode === "deep" ? "emergency" : "normal";
+            setMode(next);
+            if (next === "emergency") {
+              setEmergencyBanner(true);
+            }
+          }} title="Tap to change mode">
+            {mode === "emergency" && <span className="badge-emergency">🚑 জরুরি</span>}
+            {mode === "normal" && <span className="badge-normal">💬 নরম</span>}
+            {mode === "deep" && <span className="badge-deep">🔬 বিশ্লেষণ</span>}
+          </div>
           <Button variant="ghost" size="icon" className="tb-icon-btn dark text-white" onClick={() => navigate?.("/home")}>
              <X className="h-5 w-5" />
           </Button>
@@ -394,18 +409,50 @@ export default function ChatInterface({ initialPrompt, onShowResults, onAiResult
       </div>
 
       {emergencyBanner && (
-        <div className="bg-destructive text-white py-2 px-4 flex items-center justify-between text-xs font-bold animate-pulse z-10 shrink-0">
+        <div className="bg-destructive text-white py-2 px-4 flex flex-col gap-2 text-xs font-bold animate-pulse z-10 shrink-0">
           <div className="flex items-center gap-2">
             <AlertTriangle className="h-4 w-4" />
             <span>জরুরি অবস্থা: ৯৯৯ এ কল দিন</span>
           </div>
-          <Button variant="ghost" size="sm" className="h-6 text-white px-2 py-0" onClick={() => setEmergencyBanner(false)}>বন্ধ করুন</Button>
+          <div className="flex gap-2">
+            <Button variant="default" size="sm" className="min-w-[44px] min-h-[44px]" onClick={() => window.open('tel:999')}>অ্যাম্বুলেন্স কল</Button>
+            <Button variant="default" size="sm" className="min-w-[44px] min-h-[44px]" onClick={() => {
+              if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(pos => {
+                  const url = `https://www.google.com/maps/search/?api=1&query=${pos.coords.latitude},${pos.coords.longitude}`;
+                  window.open(url);
+                });
+              }
+            }}>শেয়ার লোকেশন</Button>
+          </div>
+          <Button variant="ghost" size="sm" className="self-end min-w-[44px] min-h-[44px]" onClick={() => setEmergencyBanner(false)}>বন্ধ করুন</Button>
         </div>
       )}
 
       {!onboardingDone && !isGuest && (
         <div className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
           <OnboardingCard onSubmit={handleOnboardingSubmit} />
+        </div>
+      )}
+      
+      {/* Live Symptom Summary Card */}
+      {Object.keys(symptomSummary).length > 0 && (
+        <div className="symptom-summary-card p-3 bg-[var(--g0)] rounded-lg mb-2">
+          {Object.entries(symptomSummary).map(([key, val]) => (
+            <span key={key} className="chip-badge green mr-2 mb-1">{key}: {val}</span>
+          ))}
+        </div>
+      )}
+      
+      {/* Quick Selection Grid (Level 1) */}
+      {messages.length === 1 && (
+        <div className="quick-grid mt-2 mb-4">
+          {dynamicActions.map(action => (
+            <button key={action.id} className={`qa-item ${action.emergency ? 'qa-emergency' : ''}`} onClick={() => addMessage(action.label)}>
+              <div className="qa-icon-box"><action.icon className="h-5 w-5" /></div>
+              <div className="qa-label">{action.label}</div>
+            </button>
+          ))}
         </div>
       )}
 
@@ -416,7 +463,7 @@ export default function ChatInterface({ initialPrompt, onShowResults, onAiResult
               <div className="ai-msg-av">🤖</div>
               <div className="flex flex-col gap-2">
                 <div className="ai-bubble">
-                  <p className="whitespace-pre-line text-sm">{msg.text}</p>
+                  <p className="whitespace-pre-line text-base leading-relaxed">{msg.text}</p>
                 </div>
                 {msg.aiResponse && (
                   <div className="space-y-3 mt-1 animate-in fade-in slide-in-from-bottom-2 duration-500 w-full max-w-[90%] pl-2">
@@ -456,7 +503,7 @@ export default function ChatInterface({ initialPrompt, onShowResults, onAiResult
             <div key={msg.id} className="user-msg">
               <div className="flex flex-col items-end gap-1">
                  <div className="user-bubble">
-                   <p className="whitespace-pre-line text-sm">{msg.text}</p>
+                   <p className="whitespace-pre-line text-base leading-relaxed">{msg.text}</p>
                  </div>
                  <span className="msg-time">{new Date().toLocaleTimeString('bn-BD', { hour: '2-digit', minute: '2-digit' })}</span>
               </div>
@@ -520,6 +567,7 @@ export default function ChatInterface({ initialPrompt, onShowResults, onAiResult
           )}
         </div>
       </div>
+      <div className="text-xs text-secondary text-center mt-2 px-3 pb-2 shrink-0">এটি একটি <strong>স্বাস্থ্য সহায়তা টুল</strong>, চিকিৎসকের বিকল্প নয়। জরুরি অবস্থায় ৯৯৯ বা নিকটস্থ হাসপাতালে যোগাযোগ করুন।</div>
     </div>
   );
 }

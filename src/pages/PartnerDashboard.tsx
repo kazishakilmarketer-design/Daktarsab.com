@@ -482,6 +482,31 @@ export default function PartnerDashboard() {
   const patientsCount = [...new Set(paidBookings.map(b => b.user_phone))].length;
   const avgPerPatient = patientsCount > 0 ? Math.round(totalRevenue / patientsCount) : 0;
 
+  // Calculate dynamic daily earnings for Mon-Sun
+  const now = new Date();
+  const getDayEarnings = (dayOffset: number) => {
+    const targetDate = new Date(now.getTime() - dayOffset * 24 * 60 * 60 * 1000);
+    return paidBookings.filter(b => new Date(b.created_at).toDateString() === targetDate.toDateString()).length * 500;
+  };
+
+  const mon = getDayEarnings((now.getDay() + 6) % 7);
+  const tue = getDayEarnings((now.getDay() + 5) % 7);
+  const wed = getDayEarnings((now.getDay() + 4) % 7);
+  const thu = getDayEarnings((now.getDay() + 3) % 7);
+  const fri = getDayEarnings((now.getDay() + 2) % 7);
+  const sat = getDayEarnings((now.getDay() + 1) % 7);
+  const sun = getDayEarnings(now.getDay());
+
+  const maxVal = Math.max(mon, tue, wed, thu, fri, sat, sun, 500);
+  const dayLabels = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+  const dayVals = [mon, tue, wed, thu, fri, sat, sun];
+  const earningsBars = dayLabels.map((label, idx) => ({
+    label,
+    pct: Math.round((dayVals[idx] / maxVal) * 100),
+    val: `৳${(dayVals[idx] / 1000).toFixed(1)}k`,
+    peak: dayVals[idx] === maxVal && maxVal > 0,
+  }));
+
   const OverviewView = () => (
     <div style={{ padding: isMobile ? 14 : 24, flex: 1 }}>
       {/* Metrics */}
@@ -599,7 +624,7 @@ export default function PartnerDashboard() {
           </CardHead>
           <div style={{ padding: 18 }}>
             <div style={{ display: "flex", alignItems: "flex-end", gap: 5, height: 90 }}>
-              {EARNINGS_BARS.map(b => (
+              {earningsBars.map(b => (
                 <div key={b.label} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 3 }}>
                   <div style={{ fontSize: 9, color: "#6B7280", fontWeight: b.peak ? 700 : 400 }}>{b.peak ? `৳${(totalRevenue/2000).toFixed(0)}k` : ""}</div>
                   <div style={{ width: "100%", height: `${b.pct}%`, borderRadius: "4px 4px 0 0", background: b.peak ? G.g4 : G.g1 }} />
